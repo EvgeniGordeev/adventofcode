@@ -1,5 +1,5 @@
 def input():
-    with open('2019-day-2.txt') as f:
+    with open('input/2019-day-2.txt') as f:
         line = f.readline()
         input = [int(n) for n in line.split(',')]
         return input

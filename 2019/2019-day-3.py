@@ -108,21 +108,21 @@ def fewest_steps(directions1: list, directions2: list):
 
 
 def test_closest():
-    assert closest_manhattan(*input('2019-day-3-test1.txt')) == 6
-    assert closest_manhattan(*input('2019-day-3-test2.txt')) == 159
-    assert closest_manhattan(*input('2019-day-3-test3.txt')) == 135
+    assert closest_manhattan(*input('input/2019-day-3-test1.txt')) == 6
+    assert closest_manhattan(*input('input/2019-day-3-test2.txt')) == 159
+    assert closest_manhattan(*input('input/2019-day-3-test3.txt')) == 135
 
 
 def test_fewest():
-    assert fewest_steps(*input('2019-day-3-test1.txt')) == 30
-    assert fewest_steps(*input('2019-day-3-test2.txt')) == 610
-    assert fewest_steps(*input('2019-day-3-test3.txt')) == 410
+    assert fewest_steps(*input('input/2019-day-3-test1.txt')) == 30
+    assert fewest_steps(*input('input/2019-day-3-test2.txt')) == 610
+    assert fewest_steps(*input('input/2019-day-3-test3.txt')) == 410
 
 
 if __name__ == "__main__":
     test_closest()
-    print(f"https://adventofcode.com/2019/day/3, answer is {closest_manhattan(*input('2019-day-3.txt'))}")
+    print(f"https://adventofcode.com/2019/day/3, answer is {closest_manhattan(*input('input/2019-day-3.txt'))}")
     test_fewest()
     # 163524 is too low
-    print(f"https://adventofcode.com/2019/day/3#part2, answer is {fewest_steps(*input('2019-day-3.txt'))}")
+    print(f"https://adventofcode.com/2019/day/3#part2, answer is {fewest_steps(*input('input/2019-day-3.txt'))}")
     exit(0)

@@ -16,7 +16,7 @@ def calc_fuel_for_fuel(fuel_mass: int):
 def rocket_equation():
     modules_fuel = 0
     all_fuel = 0
-    with open('2019-day-1.txt') as f:
+    with open('input/2019-day-1.txt') as f:
         for line in f:
             mass = int(line)
             fuel = calc_fuel(mass)
