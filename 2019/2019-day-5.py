@@ -28,7 +28,7 @@ def param_mode(opcode):
     param_str = f"{opcode:05d}"
     params = [int(c) for c in param_str]
     _opcode = params[3] + params[4]
-    return _opcode, params[:3][::-1]  # reverse modes with slicing technique
+    return _opcode, params[:3][::-1]  # reverse modes (CBA -> ABC) with slicing technique
 
 
 def get_index(int_codes: list, index: int, mode: int):
