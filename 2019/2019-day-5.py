@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 
+
 def _input(location='input/2019-day-5.txt'):
     cwd = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(cwd, location)) as f:
@@ -76,7 +77,7 @@ def intcode(int_codes, _in=1):
         elif opcode == 5:  # jump-if-true
             a = get_index(int_codes, instruction_pointer + 1, param_modes[0])
             b = get_index(int_codes, instruction_pointer + 2, param_modes[1])
-            if a != 0:
+            if a != 0:  
                 instruction_pointer = b
             else:
                 instruction_pointer += 3
