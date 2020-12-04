@@ -12,9 +12,13 @@ def read_data():
 
 def get_passport(line):
     pre_result = [tuple(s.split(':')) for s in line.strip().replace('\n', ' ').split(' ')]
-    result = dict()
-    for k_v in pre_result:
-        result[k_v[0]] = k_v[1]
+    # OMG: python does this!!!
+    result = dict(pre_result)
+    # no need in this junk since dict() is powerful enough to accept a list of tuples
+    # for k_v in pre_result:
+    #     result[k_v[0]] = k_v[1]
+    # or dict comprehension
+    # result = {k: v for k, v in pre_result}
     return result
 
 
@@ -24,13 +28,13 @@ def parse(_input: str):
 
 # MAIN FUNCTIONS
 CONSTRAINTS = {
-    'byr': lambda v: len(v) == 4 and 1920 <= int(v) <= 2002,
-    'iyr': lambda v: len(v) == 4 and 2010 <= int(v) <= 2020,
-    'eyr': lambda v: len(v) == 4 and 2020 <= int(v) <= 2030,
+    'byr': lambda v: len(v) == 4 and v.isdigit() and 1920 <= int(v) <= 2002,
+    'iyr': lambda v: len(v) == 4 and v.isdigit() and 2010 <= int(v) <= 2020,
+    'eyr': lambda v: len(v) == 4 and v.isdigit() and 2020 <= int(v) <= 2030,
     'hgt': lambda v: 150 <= int(v.split("cm")[0]) <= 193 if "cm" in v else 59 <= int(v.split("in")[0]) <= 76,
-    'hcl': lambda v: v.startswith('#') and set(v[1:]) <= set(string.digits + 'abcdef'),
+    'hcl': lambda v: len(v) == 7 and v.startswith('#') and set(v[1:]) <= set(string.hexdigits),
     'ecl': lambda v: v in 'amb blu brn gry grn hzl oth'.split(' '),
-    'pid': lambda v: len(v) == 9 and set(v) <= set(string.digits),
+    'pid': lambda v: len(v) == 9 and v.isdigit(),
 }
 
 
@@ -47,7 +51,11 @@ def validate_fields(passport):
             return False
         rule = CONSTRAINTS[f]
         val = passport[f]
-        if not rule(val):
+        try:
+            if not rule(val):
+                return False
+        # in case we miss a check before converting to int
+        except ValueError:
             return False
 
     return True
