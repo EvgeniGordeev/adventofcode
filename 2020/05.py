@@ -15,6 +15,9 @@ def read_data() -> list:
 
 # SANDBOX
 def parse_naive(boarding_pass: str) -> tuple:
+    """
+    original approach for better visibility
+    """
     assert len(boarding_pass) == 10
 
     lower, upper = 0, 127  # row range
