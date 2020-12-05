@@ -1,7 +1,9 @@
 # adventofcode
-Coding style inspired by https://github.com/0x8b/advent-of-code-2019
+https://adventofcode.com
 
-## [2020](https://adventofcode.com/2020)
+## 2020
+
+https://adventofcode.com/2020
 
 |Day|Name|Solution|
 |---|---|---|
