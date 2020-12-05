@@ -49,7 +49,7 @@ def parse(boarding_pass: str) -> tuple:
     return row, col
 
 
-def get_seat_id(seat: tuple) -> int:
+def calc_seat_id(seat: tuple) -> int:
     return seat[0] * 8 + seat[1]
 
 
@@ -85,7 +85,7 @@ def test():
 if __name__ == '__main__':
     test()
     lines = read_data()
-    seats = [get_seat_id(parse(p)) for p in lines]
+    seats = [calc_seat_id(parse(p)) for p in lines]
 
     part_1 = max(seats)
     print(part_1)
