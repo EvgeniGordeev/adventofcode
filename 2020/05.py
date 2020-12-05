@@ -2,19 +2,19 @@
 
 
 # HELPER FUNCTIONS
-def read_data():
+def splitter(text) -> list:
+    return [l.strip() for l in text.split("\n") if len(l.strip()) > 0]
+
+
+def read_data() -> list:
     with open(__file__, "r") as f:
         c = f.read()
         data = c[c.rindex("🎅") + 1: c.rindex("⛄")].rstrip()
-    return data
+    return splitter(data)
 
 
-def parse(_input: str):
-    return [l for l in _input.split("\n") if len(l) > 0]
-
-
-# MAIN FUNCTIONS
-def find_seat_id(boarding_pass):
+# SANDBOX
+def parse_naive(boarding_pass: str) -> tuple:
     assert len(boarding_pass) == 10
 
     lower, upper = 0, 127  # row range
@@ -33,33 +33,29 @@ def find_seat_id(boarding_pass):
         if direction == 'R':
             col = lower = (lower + upper + 1) // 2
 
-    return row * 8 + col
+    return row, col
 
 
-def get_max(passes):
-    _max, i, n = 0, 0, len(passes)
+# MAIN FUNCTIONS
+def parse(boarding_pass: str) -> tuple:
+    assert len(boarding_pass) == 10
 
-    while i < n:
-        seat = find_seat_id(passes[i])
-        if seat > _max:
-            # print(f"seat=({seat % 8}, {seat // 8})")
-            _max = seat
-        i += 1
+    row = int(boarding_pass[0:7].replace('F', '0').replace('B', '1'), 2)
+    col = int(boarding_pass[7:].replace('L', '0').replace('R', '1'), 2)
 
-    return _max
+    return row, col
 
 
-def find_missing(passes):
-    seats, i, n = [], 0, len(passes)
+def get_seat_id(seat: tuple) -> int:
+    return seat[0] * 8 + seat[1]
 
-    while i < n:
-        seats.append(find_seat_id(passes[i]))
-        i += 1
 
-    seats.sort()
+def find_missing(seats):
+    # sort to find the available seat
+    _seats = sorted(seats)
 
-    missing = seats[0]
-    for seat in seats:
+    missing = _seats[0]
+    for seat in _seats:
         if missing != seat:
             # print(f"missing seat=({missing % 8}, {missing // 8})")
             return missing
@@ -69,31 +65,32 @@ def find_missing(passes):
 
 
 # TEST
-test_input = """
-FBFBBFFRLR
-BFFFBBFRRR
-FFFBBBFRRR
-BBFFBBFRLL
-"""
+def test():
+    given = """
+    FBFBBFFRLR
+    BFFFBBFRRR
+    FFFBBBFRRR
+    BBFFBBFRLL
+    """
+    # WHEN
+    actual = [parse(s) for s in splitter(given)]
+    # THEN
+    expected = [(44, 5), (70, 7), (14, 7), (102, 4)]
+    assert actual == expected
 
-lines = parse(test_input)
-# test 1
-part_one = get_max(lines)
-assert part_one == 820
-# test 2
-# part_two = find_missing(lines)
-# assert part_two == 0
 
-# SOLUTION
-lines = parse(read_data())
-# part#1
-part_one = get_max(lines)
-print(part_one)
-assert part_one == 858
-# part#2
-part_two = find_missing(lines)
-print(part_two)
-assert part_two == 557
+if __name__ == '__main__':
+    test()
+    lines = read_data()
+    seats = [get_seat_id(parse(p)) for p in lines]
+
+    part_1 = max(seats)
+    print(part_1)
+    assert part_1 == 858
+
+    part_2 = find_missing(seats)
+    print(part_2)
+    assert part_2 == 557
 
 # INPUT
 """🎅
