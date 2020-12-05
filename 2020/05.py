@@ -53,14 +53,13 @@ def calc_seat_id(seat: tuple) -> int:
     return seat[0] * 8 + seat[1]
 
 
-def find_missing(seats):
+def find_missing(seats: list) -> int:
     # sort to find the available seat
     _seats = sorted(seats)
 
     missing = _seats[0]
     for seat in _seats:
         if missing != seat:
-            # print(f"missing seat=({missing % 8}, {missing // 8})")
             return missing
         missing += 1
 
@@ -89,10 +88,12 @@ if __name__ == '__main__':
 
     part_1 = max(seats)
     print(part_1)
+    # print(f"seat=({part_1 % 8}, {part_1 // 8})")
     assert part_1 == 858
 
     part_2 = find_missing(seats)
     print(part_2)
+    # print(f"seat=({part_2 % 8}, {part_2 // 8})")
     assert part_2 == 557
 
 # INPUT
