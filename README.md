@@ -9,3 +9,4 @@ Coding style inspired by https://github.com/0x8b/advent-of-code-2019
 |[02](https://adventofcode.com/2020/day/2)|Password Philosophy|[py](2020/02.py)|
 |[03](https://adventofcode.com/2020/day/3)|Toboggan Trajectory|[py](2020/03.py)|
 |[04](https://adventofcode.com/2020/day4)|Passport Processing|[py](2020/04.py)|
+|[04](https://adventofcode.com/2020/day5)|Binary Boarding|[py](2020/05.py)|
