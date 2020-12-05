@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 from collections import namedtuple
 
-Model = namedtuple('Model', ['min', 'max', 'rule', 'password'])
-
 
 # common functions
 def read_data():
@@ -10,6 +8,9 @@ def read_data():
         c = f.read()
         data = c[c.rindex("🎅") + 1: c.rindex("🐍")].rstrip()
     return data
+
+
+Model = namedtuple('Model', ['min', 'max', 'rule', 'password'])
 
 
 def get_model(line):

@@ -2,8 +2,6 @@
 from collections import namedtuple
 from typing import List
 
-Slope = namedtuple('Slope', ['right', 'down'])
-
 
 # common functions
 def read_data():
@@ -18,6 +16,9 @@ def parse(_input: str):
 
 
 # solution
+Slope = namedtuple('Slope', ['right', 'down'])
+
+
 def count_trees(matrix: list, sl: Slope) -> int:
     # the same pattern repeats to the right many times - multiply each line by the slope
     _matrix = [str(line * int(sl.right * len(line) / sl.down)) for line in matrix]
