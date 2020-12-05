@@ -1,6 +1,0 @@
-[submodule "credit/sarahfossheim/adventofcode19"]
-	path = credit/sarahfossheim/adventofcode19
-	url = git@github.com:sarahfossheim/adventofcode19.git
-[submodule "credit/0x8b/advent-of-code-2019"]
-	path = credit/0x8b/advent-of-code-2019
-	url = https://github.com/0x8b/advent-of-code-2019.git
