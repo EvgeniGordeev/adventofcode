@@ -1,5 +1,7 @@
 # adventofcode
-https://adventofcode.com
+
+* https://adventofcode.com
+* [Collection of external solutions](credit/Bogdanp/awesome-advent-of-code)
 
 ## 2020
 
@@ -12,6 +14,7 @@ https://adventofcode.com/2020
 |[03](https://adventofcode.com/2020/day/3)|Toboggan Trajectory|[py](2020/03.py)|
 |[04](https://adventofcode.com/2020/day4)|Passport Processing|[py](2020/04.py)|
 |[05](https://adventofcode.com/2020/day5)|Binary Boarding|[py](2020/05.py)|
+|[06](https://adventofcode.com/2020/day6)|SOME|[py](2020/06.py)|
 
 
 ## tools
