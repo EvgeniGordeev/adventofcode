@@ -1,7 +1,7 @@
 # adventofcode
 
 * https://adventofcode.com
-* [Collection of external solutions](credit/Bogdanp/awesome-advent-of-code)
+* [Collection of external solutions](credit/Bogdanp)
 
 ## 2020
 
