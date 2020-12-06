@@ -12,3 +12,29 @@ https://adventofcode.com/2020
 |[03](https://adventofcode.com/2020/day/3)|Toboggan Trajectory|[py](2020/03.py)|
 |[04](https://adventofcode.com/2020/day4)|Passport Processing|[py](2020/04.py)|
 |[05](https://adventofcode.com/2020/day5)|Binary Boarding|[py](2020/05.py)|
+
+
+## tools
+
+download input of last day:
+
+* install:
+
+```bash
+go get -u github.com/GreenLightning/advent-of-code-downloader/aocdl
+go build -v github.com/GreenLightning/advent-of-code-downloader/aocdl
+mv aocdl /usr/local/bin/
+echo '{"session-cookie": "xxx"}' > $HOME/.aocdlconfig
+echo "
+#!/usr/bin/env bash
+aocdl --force
+pbcopy <input.txt
+" > get.sh
+chmod +x get.sh
+```
+
+* download to input.txt and copy to clipboard:
+
+```bash
+./get.sh
+```
