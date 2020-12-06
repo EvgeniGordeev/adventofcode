@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
+from collections import namedtuple
 
 
 # HELPER FUNCTIONS
 def splitter(text) -> list:
-    return [l.strip() for l in text.split("\n") if len(l.strip()) > 0]
+    return [l for l in text.strip().split("\n")]
 
 
 def read_data() -> list:
@@ -40,17 +41,13 @@ def parse_naive(boarding_pass: str) -> tuple:
 
 
 # MAIN FUNCTIONS
-def parse(boarding_pass: str) -> tuple:
+def parse(boarding_pass: str) -> int:
     assert len(boarding_pass) == 10
 
     row = int(boarding_pass[0:7].replace('F', '0').replace('B', '1'), 2)
     col = int(boarding_pass[7:].replace('L', '0').replace('R', '1'), 2)
 
-    return row, col
-
-
-def calc_seat_id(seat: tuple) -> int:
-    return seat[0] * 8 + seat[1]
+    return row * 8 + col
 
 
 def find_missing(seats: list) -> int:
@@ -68,14 +65,20 @@ def find_missing(seats: list) -> int:
 
 # TEST
 def test():
+    Seat = namedtuple('Seat', ['row', 'column'])
+
+    def get_row_col(seat_id: int) -> tuple:
+        return Seat(seat_id // 8, seat_id % 8)
+
+    # GIVEN
     given = """
-    FBFBBFFRLR
-    BFFFBBFRRR
-    FFFBBBFRRR
-    BBFFBBFRLL
+FBFBBFFRLR
+BFFFBBFRRR
+FFFBBBFRRR
+BBFFBBFRLL
     """
     # WHEN
-    actual = [parse(s) for s in splitter(given)]
+    actual = [get_row_col(parse(s)) for s in splitter(given)]
     # THEN
     expected = [(44, 5), (70, 7), (14, 7), (102, 4)]
     assert actual == expected
@@ -84,16 +87,14 @@ def test():
 if __name__ == '__main__':
     test()
     lines = read_data()
-    seats = [calc_seat_id(parse(p)) for p in lines]
+    seats = [parse(p) for p in lines]
 
     part_1 = max(seats)
     print(part_1)
-    # print(f"seat=({part_1 % 8}, {part_1 // 8})")
     assert part_1 == 858
 
     part_2 = find_missing(seats)
     print(part_2)
-    # print(f"seat=({part_2 % 8}, {part_2 // 8})")
     assert part_2 == 557
 
 # INPUT
