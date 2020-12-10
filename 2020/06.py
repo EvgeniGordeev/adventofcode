@@ -36,7 +36,7 @@ def count_everyone_yes(groups: list) -> int:
 
 
 # TEST
-def test1():
+def test():
     # GIVEN
     given = """
 abc
@@ -60,7 +60,7 @@ b
 
 
 if __name__ == '__main__':
-    test1()
+    test()
     lines = read_data()
     # ONE
     part_1 = count_anyone_yes(lines)
