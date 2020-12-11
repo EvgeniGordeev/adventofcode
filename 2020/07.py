@@ -21,71 +21,58 @@ def to_bag(raw: str) -> tuple:
     return name, num
 
 
-def count_shiny_gold_holders(lines: list) -> int:
-    all = dict()
-    shiny_gold_holders = set()
-    visited = set()
-
-    for r in lines:
-        d = r.split("contain")
-        bag = to_bag(d[0])[0]
-        contains = set(to_bag(s)[0] for s in d[1].strip().split(','))
-
-        if 'no other bag' in contains:
-            continue
-
-        all.update({bag: contains})
-
-        check_if_bags_contain_shiny_gold(all, shiny_gold_holders, visited)
-
-    # do another round
-    check_if_bags_contain_shiny_gold(all, shiny_gold_holders, set())
-
-    return len(shiny_gold_holders)
-
-
-def check_if_bags_contain_shiny_gold(bags, shiny_gold_holders, visited):
-    for key, val in bags.items():
-        if 'shiny gold bag' in val or val & shiny_gold_holders:
-            shiny_gold_holders.add(key)
-        for v in val:
-            # get out of recursion
-            if v in visited:
-                continue
-            visited.add(v)
-            if v in bags:
-                check_if_bags_contain_shiny_gold({v: bags.get(v)}, shiny_gold_holders, visited)
-
-
-def count_bags_in_shiny_gold(lines: list) -> int:
-    all = dict()
-
+def to_map(lines: list) -> dict:
+    _map = dict()
     for r in lines:
         d = r.split("contain")
         bag = to_bag(d[0])[0]
         contains = set(to_bag(s) for s in d[1].strip().split(','))
 
-        if 'no other bag' in contains:
+        _map.update({bag: contains})
+    return _map
+
+
+def traverse_and_count1(all_bags, inner_bags, holders, no_holders):
+    for key, val in inner_bags.items():
+        for inner_bag, _ in val:
+            if inner_bag == 'shiny gold bag' or inner_bag in holders:
+                holders.add(key)
+            # get out of recursion
+            if inner_bag == 'no other bag' or inner_bag in no_holders:
+                no_holders.add(key)
+                continue
+            if inner_bag in all_bags:
+                prev = len(holders)
+                traverse_and_count1(all_bags, {inner_bag: all_bags.get(inner_bag)}, holders, no_holders)
+                # if inner bag contains gold shiny we can mark the current bag as the holder too
+                if len(holders) > prev:
+                    holders.add(key)
+
+
+def count_shiny_gold_holders(lines: list) -> int:
+    bags_map = to_map(lines)
+
+    shiny_gold_holders = set()
+    traverse_and_count1(bags_map, bags_map, shiny_gold_holders, set())
+    return len(shiny_gold_holders)
+
+
+def traverse_and_count2(bags, inner_bags, counter) -> int:
+    for inner_bag, n in inner_bags:
+        if inner_bag == 'no other bag':
             continue
-
-        all.update({bag: contains})
-
-    return count_shiny_bag(all)
-
-
-def count_shiny_bag(bags):
-    if 'shiny gold bag' not in bags:
-        return 0
-
-    return traverse(bags, bags['shiny gold bag'], 0)
-
-
-def traverse(bags, contains, counter) -> int:
-    for c in contains:
-        counter += c[1]
-        if c[0] in bags:
-            counter += c[1] * traverse(bags, bags[c[0]], 0)
+        counter += n
+        if inner_bag in bags:
+            counter += n * traverse_and_count2(bags, bags[inner_bag], 0)
     return counter
+
+
+def count_shiny_gold_inner_bags(lines: list) -> int:
+    bags_map = to_map(lines)
+
+    if 'shiny gold bag' not in bags_map:
+        return 0
+    return traverse_and_count2(bags_map, bags_map['shiny gold bag'], 0)
 
 
 # TEST
@@ -105,7 +92,7 @@ dredy bredy bags contain 1 light red bag.
 buggy woogy bags contain 1 dredy bredy bag.
     """
     assert 6 == count_shiny_gold_holders(splitter(given))
-    assert 32 == count_bags_in_shiny_gold(splitter(given))
+    assert 32 == count_shiny_gold_inner_bags(splitter(given))
 
 
 if __name__ == '__main__':
@@ -116,9 +103,9 @@ if __name__ == '__main__':
     print(part_1)
     assert part_1 == 254
     # # TWO
-    part_2 = count_bags_in_shiny_gold(lines)
+    part_2 = count_shiny_gold_inner_bags(lines)
     print(part_2)
-    # assert part_2 == 3585
+    assert part_2 == 6006
 
 # INPUT
 """🎅

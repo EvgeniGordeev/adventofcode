@@ -14,8 +14,11 @@ https://adventofcode.com/2020
 |[03](https://adventofcode.com/2020/day/3)|Toboggan Trajectory|[py](2020/03.py)|5351 function calls in 0.016 seconds|
 |[04](https://adventofcode.com/2020/day/4)|Passport Processing|[py](2020/04.py)|8697 function calls in 0.020 seconds|
 |[05](https://adventofcode.com/2020/day/5)|Binary Boarding|[py](2020/05.py)|4323 function calls in 0.012 seconds|
-|[06](https://adventofcode.com/2020/day/6)|Custom Customs|[py](2020/06.py)||
-|[07](https://adventofcode.com/2020/day/7)|Handy Haversacks|[py](2020/07.py)||
+|[06](https://adventofcode.com/2020/day/6)|Custom Customs|[py](2020/06.py)|4529 function calls in 0.015 seconds|
+|[07](https://adventofcode.com/2020/day/7)|Handy Haversacks|[py](2020/07.py)|194486 function calls in 0.641 seconds|
+|[08](https://adventofcode.com/2020/day/8)|Handheld Halting|[py](2020/08.py)||
+|[09](https://adventofcode.com/2020/day/9)|Encoding Error|[py](2020/09.py)||
+|[10](https://adventofcode.com/2020/day/10)|Adapter Array|[py](2020/10.py)||
 
 
 ## tools
