@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import re
 
 
 # HELPER FUNCTIONS
@@ -14,31 +15,26 @@ def read_data() -> list:
 
 
 # MAIN FUNCTIONS
-def to_bag(raw: str) -> tuple:
-    name = ''.join([i for i in raw.replace("bags", "bag") if not i.isdigit()]).strip()
-    num_str = ''.join([i for i in raw if i.isdigit()])
-    num = int(num_str) if num_str.isdigit() else 0
-    return name, num
-
-
 def to_map(lines: list) -> dict:
     _map = dict()
     for r in lines:
         d = r.split("contain")
-        bag = to_bag(d[0])[0]
-        contains = set(to_bag(s) for s in d[1].strip().split(','))
+        bag = re.findall(r'(.+?) bags', d[0])[0]
+        contains = re.findall(r'(\d+) (.+?) bags?', d[1])
 
         _map.update({bag: contains})
     return _map
 
 
 def traverse_and_count1(all_bags, inner_bags, holders, no_holders):
-    for key, val in inner_bags.items():
-        for inner_bag, _ in val:
-            if inner_bag == 'shiny gold bag' or inner_bag in holders:
+    for key, contains in inner_bags.items():
+        if len(contains) == 0:
+            no_holders.add(key)
+        for _, inner_bag in contains:
+            if inner_bag == 'shiny gold' or inner_bag in holders:
                 holders.add(key)
             # get out of recursion
-            if inner_bag == 'no other bag' or inner_bag in no_holders:
+            if inner_bag in no_holders:
                 no_holders.add(key)
                 continue
             if inner_bag in all_bags:
@@ -58,9 +54,8 @@ def count_shiny_gold_holders(lines: list) -> int:
 
 
 def traverse_and_count2(bags, inner_bags, counter) -> int:
-    for inner_bag, n in inner_bags:
-        if inner_bag == 'no other bag':
-            continue
+    for _n, inner_bag in inner_bags:
+        n = int(_n)
         counter += n
         if inner_bag in bags:
             counter += n * traverse_and_count2(bags, bags[inner_bag], 0)
@@ -70,9 +65,9 @@ def traverse_and_count2(bags, inner_bags, counter) -> int:
 def count_shiny_gold_inner_bags(lines: list) -> int:
     bags_map = to_map(lines)
 
-    if 'shiny gold bag' not in bags_map:
+    if 'shiny gold' not in bags_map:
         return 0
-    return traverse_and_count2(bags_map, bags_map['shiny gold bag'], 0)
+    return traverse_and_count2(bags_map, bags_map['shiny gold'], 0)
 
 
 # TEST

@@ -1,4 +1,0 @@
-[submodule "awesome-advent-of-code"]
-	path = credit/Bogdanp/awesome-advent-of-code
-	url = https://github.com/Bogdanp/awesome-advent-of-code
-	branch = master
