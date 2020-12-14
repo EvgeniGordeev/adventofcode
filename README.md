@@ -19,7 +19,7 @@
 |[07](https://adventofcode.com/2020/day/7)|Handy Haversacks|[py](2020/07.py)|18025 function calls in 0.047 seconds|
 |[08](https://adventofcode.com/2020/day/8)|Handheld Halting|[py](2020/08.py)|62482 function calls in 0.136 seconds|
 |[09](https://adventofcode.com/2020/day/9)|Encoding Error|[py](2020/09.py)|1470 function calls in 0.014 seconds|
-|[10](https://adventofcode.com/2020/day/10)|Adapter Array|[py](2020/10.py)||
+|[10](https://adventofcode.com/2020/day/10)|Adapter Array|[py](2020/10.py)|475 function calls in 0.003 seconds|
 |[10](https://adventofcode.com/2020/day/10)|Adapter Array|[py](2020/10.py)||
 
 
