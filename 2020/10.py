@@ -94,7 +94,7 @@ def find_arrangements2(nums: list) -> int:
 
 def to_adapter_map(nums):
     jolt, i, n, _nums = 0, 0, len(nums), sorted(nums)
-    optional = set()
+    # optional = set()
     adapter_map = {}
     while i < n:
         adapter = _nums[i]
@@ -105,7 +105,7 @@ def to_adapter_map(nums):
                 adapter_map[jolt] = [adapter]
             j = i + 1
             while j < n and 0 < _nums[j] - jolt < 4:
-                optional.add(_nums[j - 1])
+                # optional.add(_nums[j - 1])
                 adapter_map[jolt].append(_nums[j])
                 j += 1
             jolt = adapter
@@ -124,7 +124,7 @@ def count_sequences(leaves: dict, start: int, opts: list):
         curr = leaves[start]
         del leaves[start]
         for o in opts:
-            leaves[o] = leaves.get(o, 0) + curr
+            leaves[o] = (leaves[o] if o in leaves else 0) + curr
 
 
 def find_arrangements(nums: list) -> int:
@@ -152,6 +152,22 @@ def countways2(nums):
         else:
             a, b, c = b, c, 0
     return c
+
+
+def countways(memo, adapters, start, goal):
+    k = (len(adapters), start)
+    if k in memo:
+        return memo[k]
+    ways = 0
+    if goal - start <= 3:
+        ways += 1
+    if not adapters:
+        return ways
+    if adapters[0] - start <= 3:
+        ways += countways(memo, adapters[1:], adapters[0], goal)
+    ways += countways(memo, adapters[1:], start, goal)
+    memo[k] = ways
+    return ways
 
 
 # TEST
@@ -218,10 +234,12 @@ if __name__ == '__main__':
     part_1 = find_joltage(find_differences(lines))
     print(part_1)
     assert part_1 == 2475
-    # # TWO
+    # TWO
+    # part_2 = countways({}, sorted(lines), 0, max(lines) + 3)
+    # part_2 = countways2(lines)
     part_2 = find_arrangements(lines)
     print(part_2)
-    # # assert part_2 == 3585
+    assert part_2 == 442136281481216
 
 # INPUT
 """🎅
