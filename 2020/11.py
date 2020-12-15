@@ -2,6 +2,7 @@
 
 
 # HELPER FUNCTIONS
+from functools import lru_cache
 from typing import List, Dict, Tuple
 
 
@@ -17,78 +18,123 @@ def read_data() -> list:
 
 
 # MAIN FUNCTIONS
-def get_adjacent_seats(x, y, w, h):
-    adjacent_coords = [(x + a, y + b)
-                       for a in range(-1, 2)
-                       for b in range(-1, 2)
-                       if -1 < x + a < w and -1 < y + b < h]
-    try:
-        adjacent_coords.remove((x, y))
-    except ValueError:
-        print(f"({x}, {y}")
+# dirs as on a clock clockwise - 10, 12, 2,
+# starting from 12               9,  xy, 3,
+#                                7,  6 , 4,
+DIRS = [(b, a)
+        for a in range(-1, 2)
+        for b in range(-1, 2)]
+DIRS.remove((0, 0))
+DIRS.append(DIRS.pop(DIRS.index((-1, -1))))
+
+CONSTRAINTS = {
+    'DEPTH': 1,
+    'OCCUPIED_LIMIT': 4
+}
+
+TYPES = {
+    'EMPTY': 'L',
+    'OCCUPIED': '#',
+    'FLOOR': '.'
+}
+
+
+def _calc_adjacent_seats(x, y, w, h, depth: int = None):
+    if depth is None:
+        depth = max(w, h)
+
+    adjacent_coords = []
+    for dx, dy in DIRS:
+        cells = []
+        for i in range(1, depth + 1):
+            if -1 < x + i * dx < w and -1 < y + i * dy < h:
+                cells.append((x + i * dx, y + i * dy))
+            else:
+                break
+        if len(cells) > 0:
+            adjacent_coords.append(cells)
+
     return adjacent_coords
 
 
-def check_adjacent_for_empty(rows: list, adjacent_coords: list):
-    for x, y in adjacent_coords:
-        if rows[y][x] not in ('L', '.'):
-            return False
+@lru_cache
+def _coord_map(w: int, h: int, limit: int) -> Dict[Tuple[int, int], List[Tuple[int, int]]]:
+    """
+    Create a memo map for adjacent cells based on width and height
+    """
+    adjacent_cells_map = {(x, y): _calc_adjacent_seats(x, y, w, h, limit) for x in range(w) for y in range(h)}
+    return adjacent_cells_map
+
+
+@lru_cache
+def _get_neighbors(x, y, w, h, depth):
+    return _coord_map(w, h, depth)[(x, y)]
+
+
+def _check_empty(rows: list, adjacent_coords_by_dir: list):
+    for adjacent_coords in adjacent_coords_by_dir:
+        for x, y in adjacent_coords:
+            if rows[y][x] == TYPES['OCCUPIED']:
+                return False
+            # instead of considering just the eight immediately adjacent seats, consider the first seat in each of those eight directions
+            # i.e. if it's not the floor get out of the loop
+            if rows[y][x] != TYPES['FLOOR']:
+                break
 
     return True
 
 
-def check_adjacent_for_occupied(rows: list, adjacent_coords: list):
-    if len(adjacent_coords) < 4:
+def _check_occupied(rows: list, adjacent_coords_by_dir: list):
+    if len(adjacent_coords_by_dir) < CONSTRAINTS['OCCUPIED_LIMIT']:
         return False
 
     adj_seats = []
-    for x, y in adjacent_coords:
-        if rows[y][x] in ('#'):
-            adj_seats.append(rows[y][x])
-        if len(adj_seats) == 4:
-            return True
+
+    for adjacent_coords in adjacent_coords_by_dir:
+        for x, y in adjacent_coords:
+            if rows[y][x] == TYPES['OCCUPIED']:
+                adj_seats.append(rows[y][x])
+                if len(adj_seats) == CONSTRAINTS['OCCUPIED_LIMIT']:
+                    return True
+                break
+            # instead of considering just the eight immediately adjacent seats, consider the first seat in each of those eight directions
+            # i.e. if it's not the floor get out of the loop
+            if rows[y][x] != TYPES['FLOOR']:
+                break
 
     return False
 
 
-def apply_rules(row_index: int, row: str, rows: list, memo: dict) -> str:
-    i, n, _row = 0, len(row), list(row)
-    while i < n:
+def _apply_rules(row_index: int, row: str, rows: list) -> str:
+    i, w, h, _row = 0, len(row), len(rows), list(row)
+    while i < w:
         seat = _row[i]
-        # last seat in row or adjacent is not occupied
-        if seat == 'L' and check_adjacent_for_empty(rows, memo[(i, row_index)]):
-            _row[i] = '#'
-        if seat == '#' and check_adjacent_for_occupied(rows, memo[(i, row_index)]):
-            _row[i] = 'L'
+        # If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied
+        if seat == TYPES['EMPTY'] and _check_empty(rows, _get_neighbors(i, row_index, w, h, CONSTRAINTS['DEPTH'])):
+            _row[i] = TYPES['OCCUPIED']
+        # If a seat is occupied (#) and OCCUPIED_LIMIT or more seats adjacent to it are also occupied, the seat becomes empty
+        if seat == TYPES['OCCUPIED'] and _check_occupied(rows, _get_neighbors(i, row_index, w, h, CONSTRAINTS['DEPTH'])):
+            _row[i] = TYPES['EMPTY']
         i += 1
 
     return ''.join(_row)
 
 
-def memoize(w, h) -> Dict[Tuple[int, int], List[Tuple[int, int]]]:
-    """
-    Create a memo map for adjacent cells based on width and height
-    """
-    adjacent_cells_map = {(x, y): get_adjacent_seats(x, y, w, h) for x in range(w) for y in range(h)}
-    return adjacent_cells_map
-
-
-def people_decide(given: List[str], memo: dict):
-    return [apply_rules(i, row, given, memo) for i, row in enumerate(given)]
+def _people_decide(grid: List[str]):
+    return [_apply_rules(i, row, grid) for i, row in enumerate(grid)]
 
 
 def count_occupied_seats(rows: list) -> int:
     _rows = rows
-    adjacent_cells_map = memoize(len(rows[0]), len(rows))
 
     while True:
-        _rows2 = people_decide(_rows, adjacent_cells_map)
+        _rows2 = _people_decide(_rows)
         if _rows2 == _rows:
             break
         else:
             _rows = _rows2
 
-    occupied_seats = sum([1 for row in _rows for seat in row if seat == '#'])
+    occupied_seats = ''.join(_rows2).count(TYPES['OCCUPIED'])
     return occupied_seats
 
 
@@ -168,28 +214,51 @@ L.#.L..#..
 #.#L#L#.##
 """)
     # round 1
-    adjacent_cells_map = memoize(len(given[0]), len(given))
-
-    assert round1 == people_decide(given, adjacent_cells_map)
-    assert round2 == people_decide(round1, adjacent_cells_map)
-    assert round3 == people_decide(round2, adjacent_cells_map)
-    assert round4 == people_decide(round3, adjacent_cells_map)
-    assert round5 == people_decide(round4, adjacent_cells_map)
+    assert round1 == _people_decide(given)
+    assert round2 == _people_decide(round1)
+    assert round3 == _people_decide(round2)
+    assert round4 == _people_decide(round3)
+    assert round5 == _people_decide(round4)
     # actual test
     assert 37 == count_occupied_seats(given)
+    # part 2 test
+    round2 = splitter("""
+#.LL.LL.L#
+#LLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLL#
+#.LLLLLL.L
+#.LLLLL.L#
+""")
+
+    CONSTRAINTS['DEPTH'] = max(len(given), len(given[0]))
+    CONSTRAINTS['OCCUPIED_LIMIT'] = 5
+
+    assert round1 == _people_decide(given)
+    assert round2 == _people_decide(round1)
+    # skip testing other rounds
+    assert 26 == count_occupied_seats(given)
 
 
 if __name__ == '__main__':
     test()
-    lines = read_data()
-    # ONE
-    part_1 = count_occupied_seats(lines)
+    grid = read_data()
+    # ONE #1
+    CONSTRAINTS['DEPTH'] = 1
+    CONSTRAINTS['OCCUPIED_LIMIT'] = 4
+    part_1 = count_occupied_seats(grid)
     print(part_1)
-    # assert part_1 == 6930
-    # # TWO
-    # part_2 = count_everyone_yes(lines)
-    # print(part_2)
-    # assert part_2 == 3585
+    assert part_1 == 2211
+    # TWO #2
+    CONSTRAINTS['DEPTH'] = max(len(grid), len(grid[0]))
+    CONSTRAINTS['OCCUPIED_LIMIT'] = 5
+    part_2 = count_occupied_seats(grid)
+    print(part_2)
+    assert part_2 == 1995
 
 # INPUT
 """🎅
