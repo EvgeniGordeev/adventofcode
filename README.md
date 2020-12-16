@@ -21,6 +21,7 @@
 |[10](https://adventofcode.com/2020/day/10)|Adapter Array|[py](2020/10.py)|216 function calls in 0.002 seconds|
 |[11](https://adventofcode.com/2020/day/11)|Seating System|[py](2020/11.py)|9225289 function calls in 23.786 seconds|
 |[12](https://adventofcode.com/2020/day/12)|Rain Risk|[py](2020/12.py)|13547 function calls in 0.046 seconds|
+|[13](https://adventofcode.com/2020/day/13)|Shuttle Search|[py](2020/13.py)||
 
 ## tools
 
