@@ -6,7 +6,6 @@
 ## 2020
 
 * https://adventofcode.com/2020
-* https://github.com/sophiebits/adventofcode
 
 |Day|Name|Solution|Stats (`python -O -m profile 2020/01.py`)
 |---|---|---|---|
@@ -21,6 +20,7 @@
 |[09](https://adventofcode.com/2020/day/9)|Encoding Error|[py](2020/09.py)|1470 function calls in 0.014 seconds|
 |[10](https://adventofcode.com/2020/day/10)|Adapter Array|[py](2020/10.py)|216 function calls in 0.002 seconds|
 |[11](https://adventofcode.com/2020/day/11)|Seating System|[py](2020/11.py)|9225289 function calls in 23.786 seconds|
+|[12](https://adventofcode.com/2020/day/12)|Rain Risk|[py](2020/12.py)|13547 function calls in 0.046 seconds|
 
 ## tools
 
@@ -46,3 +46,8 @@ chmod +x get.sh
 ```bash
 ./get.sh
 ```
+
+## Py Tops from Leaderboard
+
+* https://github.com/sophiebits/adventofcode
+* https://github.com/arknave/advent-of-code-2020
