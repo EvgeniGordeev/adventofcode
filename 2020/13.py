@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 
-# HELPER FUNCTIONS
 import math
 import sys
 from collections import namedtuple
@@ -9,6 +8,7 @@ from functools import reduce
 from typing import List
 
 
+# HELPER FUNCTIONS
 def parser(text) -> list:
     return [l for l in text.strip().split("\n")]
 
