@@ -155,13 +155,13 @@ def test():
     # THEN
     assert minutes_to_wait == 295
     # test 2
-    # assert part2_brute_force('12,x,x,13,11') == 348
-    # assert part2('12,x,x,13,11') == 348
-    # assert part2_brute_force('17,7,10') == 748
-    # assert part2('17,7,10') == 748
-    # assert part2_brute_force('11,x,9,7') == 88
-    # assert part2('11,x,9,7') == 88
-    # assert part2_brute_force('18,x,x,x,x,x,17,x,x,x,13,11') == 198
+    assert part2_brute_force('12,x,x,13,11') == 348
+    assert part2('12,x,x,13,11') == 348
+    assert part2_brute_force('17,7,10') == 748
+    assert part2('17,7,10') == 748
+    assert part2_brute_force('11,x,9,7') == 88
+    assert part2('11,x,9,7') == 88
+    assert part2_brute_force('18,x,x,x,x,x,17,x,x,x,13,11') == 198
     assert part2('18,x,x,x,x,x,17,x,x,x,13,11') == 198
     assert part2('11,x,9,7') == 88
     assert part2_brute_force('67,7,59,61') == 754018
@@ -172,10 +172,12 @@ def test():
     assert part2('67,7,x,59,61') == 1261476
     assert part2('1789,37,47,1889') == 1202161486
     assert part2(given[1]) == 1068781
+    return True
 
 
 if __name__ == '__main__':
-    test()
+    assert test()
+
     lines = read_input()
     time_stamp = lines[0]
     bus_ids = lines[1]
