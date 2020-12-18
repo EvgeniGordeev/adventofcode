@@ -21,7 +21,12 @@
 |[10](https://adventofcode.com/2020/day/10)|Adapter Array|[py](2020/10.py)|216 function calls in 0.002 seconds|
 |[11](https://adventofcode.com/2020/day/11)|Seating System|[py](2020/11.py)|9225289 function calls in 23.786 seconds|
 |[12](https://adventofcode.com/2020/day/12)|Rain Risk|[py](2020/12.py)|13547 function calls in 0.046 seconds|
-|[13](https://adventofcode.com/2020/day/13)|Shuttle Search|[py](2020/13.py)||
+|[13](https://adventofcode.com/2020/day/13)|Shuttle Search|[py](2020/13.py)|5107 function calls in 0.016 seconds|
+|[14](https://adventofcode.com/2020/day/14)|Docking Data|[py](2020/14.py)||
+|[15](https://adventofcode.com/2020/day/15)|Rambunctious Recitation|[py](2020/15.py)||
+|[16](https://adventofcode.com/2020/day/16)|Ticket Translation|[py](2020/16.py)||
+|[17](https://adventofcode.com/2020/day/17)|Conway Cubes|[py](2020/17.py)||
+|[18](https://adventofcode.com/2020/day/18)|Operation Order|[py](2020/18.py)||
 
 ## tools
 
