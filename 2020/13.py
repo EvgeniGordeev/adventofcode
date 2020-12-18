@@ -3,6 +3,7 @@
 
 # HELPER FUNCTIONS
 import math
+import sys
 from collections import namedtuple
 from functools import reduce
 from typing import List
@@ -155,8 +156,8 @@ def test():
     # THEN
     assert minutes_to_wait == 295
     # test 2
-    establish_range_pattern(17, 13, 2)
-    establish_range_pattern(17, 19, 3)
+    # establish_range_pattern(17, 13, 2)
+    # establish_range_pattern(17, 19, 3)
     assert part2_brute_force('12,x,x,13,11') == 348
     assert part2('12,x,x,13,11') == 348
     assert part2_brute_force('17,7,10') == 748
