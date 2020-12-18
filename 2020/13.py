@@ -62,25 +62,25 @@ def establish_range_pattern(a, b, rule) -> tuple:
     Common Rule is range(first_intersection, inf, b)
     So this
     """
-    # print(f"a={a}, b={b}, diff={rule}")
+    print(f"a={a}, b={b}, diff={rule}")
 
     lcm = _lcm(a, b)
     l1 = range(a, lcm + rule + 1, a)
     l2 = range(b, lcm + rule + 1, b)
     i, j, n = 0, 0, max(len(l1), len(l2))
 
-    # debug = 0
+    debug = 0
     while i < n and j < n:
         diff = l2[j] - l1[i]
 
         if diff == rule:
-            #
-            # debug += 1
-            # if debug == 1:
-            #     print(f"range({l1[i]}, sys.maxsize, {lcm})")
-            # print(f"({l1[i]}, {l2[j]}, {i}, {j})")
-            # if debug == 5:
-            #     break
+
+            debug += 1
+            if debug == 1:
+                print(f"range({l1[i]}, sys.maxsize, {lcm})")
+            print(f"({l1[i]}, {l2[j]}, {i}, {j})")
+            if debug == 5:
+                break
             return l1[i], lcm
         if diff > rule:
             i += 1
@@ -98,14 +98,14 @@ def part1(timestamp, bus_ids):
     return buses[next_departures.index(closest)] * (closest - ts)
 
 
+Schedule = namedtuple('Schedule', 'start interval diff')
+
+
 def _lcm(*nums):
     return reduce(lambda a, b: a * b // math.gcd(a, b), nums)
 
 
-Schedule = namedtuple('Schedule', 'start interval diff')
-
-
-def find_intersection(s1: Schedule, schedules: List[Schedule]) -> Schedule:
+def _find_intersection(s1: Schedule, schedules: List[Schedule]) -> Schedule:
     if len(schedules) == 0:
         return s1
 
@@ -121,7 +121,7 @@ def find_intersection(s1: Schedule, schedules: List[Schedule]) -> Schedule:
     while i1 < n1 and i2 < n2:
         diff = r2[i2] - r1[i1]
         if diff == rule:
-            return find_intersection(Schedule(r1[i1], lcm, 0), schedules[1:])
+            return _find_intersection(Schedule(r1[i1], lcm, 0), schedules[1:])
         if diff > rule:
             increment = abs(diff // r1.step) or 1
             i1 += increment
@@ -138,7 +138,7 @@ def part2(lines):
     schedules = [Schedule(0, buses[i], constraint[i]) for i in range(len(buses))]
     # using step bus as the step in the sequence - no need to verify the constraint
     assert len(schedules) == len(constraint)
-    intersection = find_intersection(schedules[0], schedules[1:])
+    intersection = _find_intersection(schedules[0], schedules[1:])
 
     return intersection.start
 
@@ -155,6 +155,8 @@ def test():
     # THEN
     assert minutes_to_wait == 295
     # test 2
+    establish_range_pattern(17, 13, 2)
+    establish_range_pattern(17, 19, 3)
     assert part2_brute_force('12,x,x,13,11') == 348
     assert part2('12,x,x,13,11') == 348
     assert part2_brute_force('17,7,10') == 748
