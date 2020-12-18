@@ -5,7 +5,6 @@ import math
 import sys
 from collections import namedtuple
 from functools import reduce
-from typing import List
 
 
 # HELPER FUNCTIONS
@@ -106,11 +105,7 @@ def _lcm(*nums):
     return reduce(lambda a, b: a * b // math.gcd(a, b), nums)
 
 
-def _find_intersection(s1: Schedule, schedules: List[Schedule]) -> Schedule:
-    if len(schedules) == 0:
-        return s1
-
-    s2 = schedules[0]
+def _find_intersection(s1: Schedule, s2: Schedule) -> Schedule:
     lcm = _lcm(s1.interval, s2.interval)
     rule = s2.diff - s1.diff
     r1 = range(s1.start, lcm + rule + 1, s1.interval)
@@ -122,7 +117,7 @@ def _find_intersection(s1: Schedule, schedules: List[Schedule]) -> Schedule:
     while i1 < n1 and i2 < n2:
         diff = r2[i2] - r1[i1]
         if diff == rule:
-            return _find_intersection(Schedule(r1[i1], lcm, 0), schedules[1:])
+            return Schedule(r1[i1], lcm, 0)
         if diff > rule:
             increment = abs(diff // r1.step) or 1
             i1 += increment
@@ -139,9 +134,11 @@ def part2(lines):
     schedules = [Schedule(0, buses[i], constraint[i]) for i in range(len(buses))]
     # using step bus as the step in the sequence - no need to verify the constraint
     assert len(schedules) == len(constraint)
-    intersection = _find_intersection(schedules[0], schedules[1:])
+    combined = schedules[0]
+    for s in schedules[1:]:
+        combined = _find_intersection(combined, s)
 
-    return intersection.start
+    return combined.start
 
 
 # TEST
@@ -184,14 +181,14 @@ if __name__ == '__main__':
     lines = read_input()
     time_stamp = lines[0]
     bus_ids = lines[1]
-    # # ONE #1
+    # ONE #1
     part_1 = part1(time_stamp, bus_ids)
     print(part_1)
     assert part_1 == 136
-    # # TWO #2
+    # TWO #2
     part_2 = part2(bus_ids)
     print(part_2)
-    # # assert part_2 == 1995
+    assert part_2 == 305068317272992
 
 # INPUT
 """🎅
