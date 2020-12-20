@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 # HELPER FUNCTIONS
-
-
 def parser(text) -> list:
     return [int(i) for i in text.split(',')]
 
@@ -65,7 +63,6 @@ def test():
 
 if __name__ == '__main__':
     assert test()
-    exit(0)
     nums = parser(read_input())
     # ONE #1
     part_1 = part1(nums)
@@ -74,7 +71,7 @@ if __name__ == '__main__':
     # # TWO #2
     part_2 = part1(nums, 30000000)
     print(part_2)
-    # assert part_2 == 3443997590975
+    assert part_2 == 8984
 
 # INPUT
 """🎅
