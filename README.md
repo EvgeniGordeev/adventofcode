@@ -25,8 +25,8 @@
 |[14](https://adventofcode.com/2020/day/14)|Docking Data|[py](2020/14.py)|1838789 function calls in 3.656 seconds|
 |[15](https://adventofcode.com/2020/day/15)|Rambunctious Recitation|[py](2020/15.py)|37 function calls in 27.338 seconds|
 |[16](https://adventofcode.com/2020/day/16)|Ticket Translation|[py](2020/16.py)|1556 function calls in 0.015 seconds|
-|[17](https://adventofcode.com/2020/day/17)|Conway Cubes|[py](2020/17.py)||
-|[18](https://adventofcode.com/2020/day/18)|Operation Order|[py](2020/18.py)||
+|[17](https://adventofcode.com/2020/day/17)|Conway Cubes|||
+|[18](https://adventofcode.com/2020/day/18)|Operation Order|[py](2020/18.py)|43291 function calls in 0.131 seconds|
 
 ## tools
 
