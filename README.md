@@ -27,6 +27,7 @@
 |[16](https://adventofcode.com/2020/day/16)|Ticket Translation|[py](2020/16.py)|1556 function calls in 0.015 seconds|
 |[17](https://adventofcode.com/2020/day/17)|Conway Cubes|||
 |[18](https://adventofcode.com/2020/day/18)|Operation Order|[py](2020/18.py)|43291 function calls in 0.131 seconds|
+|[19](https://adventofcode.com/2020/day/19)|Monster Messages|[py](2020/19.py)||
 
 ## tools
 
