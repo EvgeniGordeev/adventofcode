@@ -2,6 +2,13 @@
 
 # HELPER FUNCTIONS
 import re
+from functools import lru_cache
+from re import Pattern
+
+
+class FrozenDict(dict):
+    def __hash__(self):
+        return hash(frozenset(self.keys()))
 
 
 def expand_rule(ref, refs_map, rules) -> list:
@@ -43,7 +50,7 @@ def parser(text) -> tuple:
     # expand only the rule we need
     expand_rule('0', raw_refs_map, rules)
 
-    return rules, messages
+    return FrozenDict(rules), messages
 
 
 def read_input() -> str:
@@ -62,15 +69,32 @@ def part1(rules, messages) -> int:
     return counter
 
 
-def check_pattern(m, patterns, rules, flat_loops):
-    m_patterns = [patterns[p] for p in patterns.keys() if p.match(m)]
-    if m == 'aaabbbbbbaaaabaababaabababbabaaabbababababaaa':
-        print('debug')
-        rule_8 = rules['8']
-        rule_11 = rules['11']
+@lru_cache()
+def re_wildcard(rule: str, ref_loops: dict) -> Pattern:
+    pattern = rule
+    for k in ref_loops.keys():
+        pattern = pattern.replace(k, "(.+)")
+    return re.compile(f"^{pattern}$")
+
+
+@lru_cache()
+def check_pattern(message, patterns, flat_loops, rules):
+    patterns = {re_wildcard(p, flat_loops): p
+                for p, spl in
+                patterns.items() if message.startswith(spl[0]) and message.endswith(spl[-1])}
+    m_patterns = [(p.findall(message), re.compile('_R(\d+)_').findall(patterns[p]), patterns[p]) for p in
+                  patterns.keys() if p.match(message)]
+    m_patterns = [list(zip(match[0] if type(match[0]) == tuple else match, rule)) for match, rule, _ in m_patterns]
     for m_p in m_patterns:
-        regex = re.compile(m_p.replace("_R8_", flat_loops["_R8_"]).replace("_R11_", flat_loops["_R11_"]))
-        if regex.match(m):
+        counter = 0
+        for inner_message, ref_rule in m_p:
+            wildcards = FrozenDict({r: r.split("_") for r in rules[ref_rule] if '_R' in r})
+            check = set(r for r in rules[ref_rule] if '_R' not in r)
+            if inner_message in check:
+                counter += 1
+            elif check_pattern(inner_message, wildcards, flat_loops, rules):
+                counter += 1
+        if counter == len(m_p):
             return True
     return False
 
@@ -81,17 +105,15 @@ def part2(rules, messages) -> int:
     flat_loops = dict()
     for k in rules["loops"].keys():
         ref_rules = rules[k.replace("_R", "").replace("_", "")]
-        non_patterns = [r for r in ref_rules if '_R' not in r]
-        replacement = [f"({np})+" for np in non_patterns]
-        flat_loops[k] = f"({'|'.join(replacement)})+"
-
-    wildcards = {re.compile("^" + r.replace("_R8_", ".*").replace("_R11_", ".*") + "$"): r for r in zero_rule if '_R' in r}
+        flat_loops[k] = [r for r in ref_rules if '_R' in r]
+    flat_loops = FrozenDict(flat_loops)
+    wildcards = FrozenDict({r: r.split("_") for r in zero_rule if '_R' in r})
     for m in messages:
         if m in check:
-            print(m)
+            # print(m)
             counter += 1
-        elif check_pattern(m, wildcards, rules, flat_loops):
-            print(m)
+        elif check_pattern(m, wildcards, flat_loops, rules):
+            # print(m)
             counter += 1
     return counter
 
@@ -177,7 +199,7 @@ aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba
 """
     assert part1(*parser(input)) == 3
     input2 = input.replace("8: 42", "8: 42 | 42 8").replace("11: 42 31", "11: 42 31 | 42 11 31")
-    # assert part2(*parser(input2)) == 12
+    assert part2(*parser(input2)) == 12
     # part2
     return True
 
