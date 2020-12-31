@@ -28,6 +28,8 @@
 |[17](https://adventofcode.com/2020/day/17)|Conway Cubes|||
 |[18](https://adventofcode.com/2020/day/18)|Operation Order|[py](2020/18.py)|43291 function calls in 0.131 seconds|
 |[19](https://adventofcode.com/2020/day/19)|Monster Messages|[py](2020/19.py)||
+|[20](https://adventofcode.com/2020/day/20)|Jurassic Jigsaw|||
+|[21](https://adventofcode.com/2020/day/21)|Allergen Assessment|[py](2020/21.py)|786 function calls in 0.005 seconds|
 
 ## tools
 

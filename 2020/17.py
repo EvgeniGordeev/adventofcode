@@ -99,8 +99,8 @@ if __name__ == '__main__':
     print(part_1)
     assert part_1 == 28884
     # # TWO #2
-    part_2 = part2(model)
-    print(part_2)
+    # part_2 = part2(model)
+    # print(part_2)
     # assert part_2 == 3443997590975
 
 # INPUT
