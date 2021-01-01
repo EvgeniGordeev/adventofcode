@@ -52,10 +52,13 @@ def _play(deck1, deck2) -> bool:
     while len(deck1) > 0 and len(deck2) > 0:
         # _log(deck1, deck2)
         # playing round
-        if (tuple(deck1), tuple(deck2)) in prev_rounds:
+        # _hash = (deck1[0], deck1[-1], len(deck1), deck2[0], deck2[-1], len(deck2),)
+        # _hash = (deck1[0], len(deck1), deck2[0], len(deck2),) # returns incorrect result for part 2
+        _hash = (deck1[0], deck1[-1], deck2[0], deck2[-1])
+        if _hash in prev_rounds:
             # player 1 wins
             return True
-        prev_rounds.add((tuple(deck1), tuple(deck2)))
+        prev_rounds.add(_hash)
 
         x, y = deck1.pop(0), deck2.pop(0)
         res = x > y
