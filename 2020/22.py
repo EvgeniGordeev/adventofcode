@@ -45,25 +45,25 @@ Player 2 plays: %s
 
 
 def _play(deck1, deck2) -> bool:
-    """
-    Recursive Combat
-    """
     prev_rounds = set()
     while len(deck1) > 0 and len(deck2) > 0:
         # _log(deck1, deck2)
-        # playing round
         # _hash = (deck1[0], deck1[-1], len(deck1), deck2[0], deck2[-1], len(deck2),)
         # _hash = (deck1[0], len(deck1), deck2[0], len(deck2),) # returns incorrect result for part 2
         _hash = (deck1[0], deck1[-1], deck2[0], deck2[-1])
         if _hash in prev_rounds:
-            # player 1 wins
+            # Before either player deals a card, if there was a previous round in this game that had exactly the same cards in the same order
+            # in the same players' decks, the game instantly ends in a win for player 1. Previous rounds from other games are not considered.
+            # (This prevents infinite games of Recursive Combat, which everyone agrees is a bad idea).
             return True
         prev_rounds.add(_hash)
 
+        # playing round
         x, y = deck1.pop(0), deck2.pop(0)
         res = x > y
         if len(deck1) >= x and len(deck2) >= y:
-            # play recursive combat
+            # If both players have at least as many cards remaining in their deck as the value of the card they just drew,
+            # the winner of the round is determined by playing a new game of Recursive Combat.
             res = _play(deck1.copy()[:x], deck2.copy()[:y])
         if res:
             deck1.extend([x, y])
