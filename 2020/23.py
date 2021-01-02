@@ -75,6 +75,8 @@ def part1_sandbox(cups: list, rounds: int = 100) -> int:
 
 # MAIN FUNCTIONS
 class Node(object):
+    __slots__ = ('val', 'next')
+
     def __init__(self, val):
         self.val = val
         self.next = None
@@ -108,11 +110,10 @@ def to_linked_dict(cups: list, limit: int) -> dict:
 
 def part1(cups: list, rounds: int = 100) -> int:
     nodes = to_linked_dict(cups, 9)
-    size = len(nodes)
     head = nodes[cups[0]]
     # print(f"{0}:{_log_node_list(head)}")
     for _ in range(rounds):
-        head = run_move(head, nodes, size)
+        head = run_move(head, nodes)
         # print(f"{_ + 1}:{_log_node_list(head)}")
     node_list = _log_node_list(nodes[1])
     return int("".join(str(n) for n in node_list[1:]))
@@ -120,23 +121,24 @@ def part1(cups: list, rounds: int = 100) -> int:
 
 def part2(cups: list, limit: int = int(1e6), rounds: int = int(1e7)) -> int:
     nodes = to_linked_dict(cups, limit)
-    size = len(nodes)
     head = nodes[cups[0]]
     # print(f"{0}:{_log_node_list(head)}")
     for stepno in range(rounds):
-        head = run_move(head, nodes, size)
+        head = run_move(head, nodes)
         if stepno % 500000 == 0:
-            print(stepno)
+            # print(stepno)
+            pass
         # print(f"{_ + 1}:{_log_node_list(head)}")
 
     a, b = nodes[1].next.val, nodes[1].next.next.val
     return a * b
 
 
-def run_move(head, nodes, size):
+def run_move(head, nodes):
+    size = len(nodes)
     pickup_start = head.next
     pickup_end = head.next.next.next
-    pick_up_vals = [pickup_start.val, pickup_start.next.val, pickup_end.val]
+    pick_up_vals = {pickup_start.val, pickup_start.next.val, pickup_end.val}
     dest = head.val - 1 if head.val > 1 else size
     while dest in pick_up_vals:
         dest -= 1
@@ -147,6 +149,22 @@ def run_move(head, nodes, size):
     pickup_end.next = dest_node.next
     dest_node.next = pickup_start
     head = head.next
+
+    # a = head.next
+    # b = a.next
+    # c = b.next
+    #
+    # look = head.val
+    # while True:
+    #     look -= 1
+    #     if look == 0:
+    #         look = size
+    #     if look not in (a.val, b.val, c.val):
+    #         break
+    #
+    # after = nodes[look]
+    # head.next, head, after.next, c.next = c.next, c.next, a, after.next
+
     return head
 
 
