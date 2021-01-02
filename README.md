@@ -31,6 +31,7 @@
 |[20](https://adventofcode.com/2020/day/20)|Jurassic Jigsaw|||
 |[21](https://adventofcode.com/2020/day/21)|Allergen Assessment|[py](2020/21.py)|786 function calls in 0.005 seconds|
 |[22](https://adventofcode.com/2020/day/22)|Crab Combat|[py](2020/22.py)|1107572 function calls in 2.289 seconds|
+|[23](https://adventofcode.com/2020/day/23)|Crab Cups|[py](2020/23.py)|11000209 function calls in 43.072 seconds|
 
 ## tools
 
