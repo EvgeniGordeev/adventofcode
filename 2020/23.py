@@ -136,15 +136,19 @@ def part2(cups: list, limit: int = int(1e6), rounds: int = int(1e7)) -> int:
 
 def run_move(head, nodes):
     size = len(nodes)
+
     pickup_start = head.next
     pickup_end = head.next.next.next
     pick_up_vals = {pickup_start.val, pickup_start.next.val, pickup_end.val}
+
     dest = head.val - 1 if head.val > 1 else size
     while dest in pick_up_vals:
         dest -= 1
         if dest < 1:
             dest = size
+
     dest_node = nodes[dest]
+
     head.next = pickup_end.next
     pickup_end.next = dest_node.next
     dest_node.next = pickup_start
