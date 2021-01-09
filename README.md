@@ -32,10 +32,11 @@
 |[21](https://adventofcode.com/2020/day/21)|Allergen Assessment|[py](2020/21.py)|786 function calls in 0.005 seconds|
 |[22](https://adventofcode.com/2020/day/22)|Crab Combat|[py](2020/22.py)|1107572 function calls in 2.289 seconds|
 |[23](https://adventofcode.com/2020/day/23)|Crab Cups|[py](2020/23.py)**|11000209 function calls in 43.072 seconds|
-|[24](https://adventofcode.com/2020/day/24)|Lobby Layout|[py](2020/24.py)|24577750 function calls in 55.156 seconds|
+|[24](https://adventofcode.com/2020/day/24)|Lobby Layout|[py](2020/24.py)|24577650 function calls in 54.416 seconds|
 |[25](https://adventofcode.com/2020/day/25)|Combo Breaker|[py](2020/25.py)||
 
 * or ** - external solution adopted
+
 ## tools
 
 download input of last day:

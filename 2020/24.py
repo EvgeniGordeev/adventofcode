@@ -18,7 +18,7 @@ def read_input() -> str:
     return data
 
 
-# MAIN FUNCTIONS
+# SANDBOX
 # https://www.redblobgames.com/grids/hexagons/#coordinates-offset
 # “even-q” vertical layout
 # shoves even columns down
@@ -62,6 +62,49 @@ HEX_GRID_ODD_Q = """
  \_____/  -1,1 \_____/  1,1  \ 
 """
 
+
+def print_hex_grid(pattern: dict, range_x: range, range_y: range):
+    hex_ = """
+  _____       
+ /     \      
+/(x1,y1)\_____
+\       /     
+ \_____/(x2,y2)
+""".split("\n")
+    hex_ = [l for l in hex_ if l.strip()]
+    # points are sorted by y ascending
+    floor = [(x, y) for y in range_y for x in range_x]
+    rows = floor[-1][1] - floor[0][1] + 1
+    cols = len(floor) // rows
+    points_by_rows = [list(zip(floor[start:end:2], floor[start + 1:end:2])) for r in range(0, rows)
+                      # just using walrus
+                      if (start := r * cols) < (end := (r + 1) * cols)]
+    pattern = defaultdict(int, {k: pattern[k] for k in sorted(pattern, key=lambda tile: tile[1]) if pattern[k] == 1})
+    str_list, r_size = [], len(points_by_rows[0])
+    for r_i, r in enumerate(points_by_rows):
+        l_start = 0 if r_i == 0 else 1
+        for line in range(l_start, len(hex_)):
+            print_line = ""
+            for c_i, cell in enumerate(r):
+                h_start = 1 if line == 4 and c_i != 0 else 0
+                start = hex_[line][h_start:]
+                start = start.replace("(x1,y1)", f"{cell[0][0]},{cell[0][1]}"[:7].center(7)) \
+                    .replace("(x2,y2)", f"{cell[1][0]},{cell[1][1]}"[:7].center(7))
+                if line == 1 and pattern[cell[0]] == 1:
+                    start = start.replace("/     \\", "/*****\\")
+                elif line == 3 and pattern[cell[1]] == 1:
+                    start = start.replace("/     ", "/*****")
+                print_line += start
+                finish = ""
+                if c_i == r_size - 1 and line > 0:
+                    finish = "\\" if line in (3, 4) else " /" if line == 1 else "/"
+                print_line += finish
+
+            str_list.append(print_line)
+    print("\n".join(str_list))
+
+
+# MAIN FUNCTIONS
 DIRS = "e, se, sw, w, nw, ne".split(", ")
 
 HEX_COORDS_EVEN_Q = {
@@ -115,45 +158,6 @@ def part1(tiles: list) -> int:
     return sum(flipped.values())
 
 
-def print_hex_grid(floor: list, pattern: dict):
-    hex_ = """
-  _____       
- /     \      
-/(x1,y1)\_____
-\       /     
- \_____/(x2,y2)
-""".split("\n")
-    hex_ = [l for l in hex_ if l.strip()]
-    # points are sorted by y ascending
-    rows = floor[-1][1] - floor[0][1] + 1
-    cols = len(floor) // rows
-    points_by_rows = [list(zip(floor[start:end:2], floor[start + 1:end:2])) for r in range(0, rows)
-                      # just using walrus
-                      if (start := r * cols) < (end := (r + 1) * cols)]
-    str_list, r_size = [], len(points_by_rows[0])
-    for r_i, r in enumerate(points_by_rows):
-        l_start = 0 if r_i == 0 else 1
-        for line in range(l_start, len(hex_)):
-            print_line = ""
-            for c_i, cell in enumerate(r):
-                h_start = 1 if line == 4 and c_i != 0 else 0
-                start = hex_[line][h_start:]
-                start = start.replace("(x1,y1)", f"{cell[0][0]},{cell[0][1]}"[:7].center(7)) \
-                    .replace("(x2,y2)", f"{cell[1][0]},{cell[1][1]}"[:7].center(7))
-                if line == 1 and pattern[cell[0]] == 1:
-                    start = start.replace("/     \\", "/*****\\")
-                elif line == 3 and pattern[cell[1]] == 1:
-                    start = start.replace("/     ", "/*****")
-                print_line += start
-                finish = ""
-                if c_i == r_size - 1 and line > 0:
-                    finish = "\\" if line in (3, 4) else " /" if line == 1 else "/"
-                print_line += finish
-
-            str_list.append(print_line)
-    print("\n".join(str_list))
-
-
 @cache
 def neighbors_even_q(tile: tuple) -> list:
     return [hex_move(tile, k) for k in HEX_COORDS_EVEN_Q]
@@ -168,17 +172,18 @@ def part2(tiles: list, days=100) -> int:
     pattern = flip(tiles)
     for _ in range(days):
         # print(f"Day {_}\n\n")
-        pattern, points = expand_area(pattern)
+        pattern, range_x, range_y = expand_area(pattern)
         new_day = defaultdict(int)
-        for x, y in points:
-            t = (x, y)
-            color = pattern[t]
-            new_day[t] = color
-            counter = sum(pattern[nbr] for nbr in neighbors_even_q(t))
-            if color == 1 and counter == 0 or counter > 2:
-                new_day[t] = 0
-            if color == 0 and counter == 2:
-                new_day[t] = 1
+        for y in range_y:
+            for x in range_x:
+                tile = (x, y)
+                color = pattern[tile]
+                new_day[tile] = color
+                counter = sum(pattern[nbr] for nbr in neighbors_even_q(tile))
+                if color == 1 and counter == 0 or counter > 2:
+                    new_day[tile] = 0
+                if color == 0 and counter == 2:
+                    new_day[tile] = 1
         pattern = new_day
 
     return sum(pattern.values())
@@ -189,7 +194,6 @@ def expand_area(pattern):
     expand visible area
     """
     min_x, min_y, max_x, max_y = 0, 0, 0, 0
-    # pattern = defaultdict(int, {k: pattern[k] for k in sorted(pattern, key=lambda tile: tile[1]) if pattern[k] == 1})
     for x, y in pattern.keys():
         if x < min_x:
             min_x = x
@@ -200,9 +204,9 @@ def expand_area(pattern):
         elif y > max_y:
             max_y = y
     # take care of odd/even min_x left top cell x, odd - is even-q, even - is odd-q
-    points = [(x, y) for y in range(min_y - 1, max_y + 2) for x in range(min_x - (1 if min_x % 2 else 2), max_x + 2)]
-    # print_hex_grid(points, pattern)
-    return pattern, points
+    min_x, min_y, max_x, max_y = min_x - (1 if min_x % 2 else 2), min_y - 1, max_x + 2, max_y + 2,
+    # print_hex_grid(pattern, range(min_x, max_x), range(min_y, max_y))
+    return pattern, range(min_x, max_x), range(min_y, max_y)
 
 
 # TEST
