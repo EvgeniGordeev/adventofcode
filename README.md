@@ -25,14 +25,17 @@
 |[14](https://adventofcode.com/2020/day/14)|Docking Data|[py](2020/14.py)|1838789 function calls in 3.656 seconds|
 |[15](https://adventofcode.com/2020/day/15)|Rambunctious Recitation|[py](2020/15.py)|37 function calls in 27.338 seconds|
 |[16](https://adventofcode.com/2020/day/16)|Ticket Translation|[py](2020/16.py)|1556 function calls in 0.015 seconds|
-|[17](https://adventofcode.com/2020/day/17)|Conway Cubes|||
+|[17](https://adventofcode.com/2020/day/17)|Conway Cubes|**||
 |[18](https://adventofcode.com/2020/day/18)|Operation Order|[py](2020/18.py)|43291 function calls in 0.131 seconds|
 |[19](https://adventofcode.com/2020/day/19)|Monster Messages|[py](2020/19.py)||
-|[20](https://adventofcode.com/2020/day/20)|Jurassic Jigsaw|||
+|[20](https://adventofcode.com/2020/day/20)|Jurassic Jigsaw|**||
 |[21](https://adventofcode.com/2020/day/21)|Allergen Assessment|[py](2020/21.py)|786 function calls in 0.005 seconds|
 |[22](https://adventofcode.com/2020/day/22)|Crab Combat|[py](2020/22.py)|1107572 function calls in 2.289 seconds|
-|[23](https://adventofcode.com/2020/day/23)|Crab Cups|[py](2020/23.py)|11000209 function calls in 43.072 seconds|
+|[23](https://adventofcode.com/2020/day/23)|Crab Cups|[py](2020/23.py)**|11000209 function calls in 43.072 seconds|
+|[24](https://adventofcode.com/2020/day/24)|Lobby Layout|[py](2020/24.py)|24577750 function calls in 55.156 seconds|
+|[25](https://adventofcode.com/2020/day/25)|Combo Breaker|[py](2020/25.py)||
 
+* or ** - external solution adopted
 ## tools
 
 download input of last day:
