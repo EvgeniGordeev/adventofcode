@@ -13,41 +13,23 @@ def parse(_input):
 
 
 # solution
-def sum_of_2_is_2020(expenses) -> int:
-    i = 0
-    n = len(expenses)
-
-    while i < n:
-        one = expenses[i]
-        j = i + 1
-        while j < n:
-            two = expenses[j]
-            if one + two == 2020:
-                # print(f"[{one}, {two}]")
-                return one * two
-            j += 1
-        i += 1
+def sum_of_2(ints, target) -> int:
+    visited = set()
+    for n in ints:
+        complement = target - n
+        if complement in visited:
+            return n * complement
+        visited.add(n)
     return -1
 
 
-def sum_of_3_is_2020(expenses) -> int:
-    i = 0
-    n = len(expenses)
+def sum_of_3(ints, target) -> int:
+    for i, n in enumerate(ints):
+        complement = target - n
+        of_2 = sum_of_2(ints[i + 1:], complement)
+        if of_2 > 0:
+            return of_2 * n
 
-    while i < n:
-        one = expenses[i]
-        j = i + 1
-        while j < n:
-            two = expenses[j]
-            k = j + 1
-            while k < n:
-                three = expenses[k]
-                if one + two + three == 2020:
-                    # print(f"[{one}, {two}, {three}]")
-                    return one * two * three
-                k += 1
-            j += 1
-        i += 1
     return -1
 
 
@@ -62,22 +44,24 @@ test_input = """
 """
 expense_report = parse(test_input)
 
-# test 1
-part_one = sum_of_2_is_2020(expense_report)
-assert part_one == 514579
+if __name__ == '__main__':
+    # test 1
+    part_one = sum_of_2(expense_report, 2020)
+    assert part_one == 514579
 
-# test 2
-part_one = sum_of_3_is_2020(expense_report)
-assert part_one == 241861950
+    # test 2
+    part_one = sum_of_3(expense_report, 2020)
+    assert part_one == 241861950
 
-# solve
-part_one = sum_of_2_is_2020(parse(read_data()))
-print(part_one)
-assert part_one == 138379
+    # solve
+    nums = parse(read_data())
+    part_one = sum_of_2(nums, 2020)
+    print(part_one)
+    assert part_one == 138379
 
-part_two = sum_of_3_is_2020(parse(read_data()))
-print(part_two)
-assert part_two == 85491920
+    part_two = sum_of_3(nums, 2020)
+    print(part_two)
+    assert part_two == 85491920
 
 # input
 """🎅
