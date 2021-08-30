@@ -2,55 +2,54 @@
 
 # HELPER FUNCTIONS
 import re
-from functools import lru_cache
-from re import Pattern
+from collections import namedtuple, defaultdict
+
+Rule = namedtuple('Rule', 'type pattern')
 
 
-class FrozenDict(dict):
-    def __hash__(self):
-        return hash(frozenset(self.keys()))
+class RuleEngine:
+    def __init__(self, rules):
+        self.rules = rules
+        self.cache = defaultdict(list)
 
-
-def expand_rule(ref, refs_map, rules) -> list:
-    """
-    rules object received 'loops' to support part 2
-    """
-    if ref in rules:
-        return rules[ref]
-    constraint = refs_map[ref]
-    if '"' in constraint:
-        rules[ref] = [constraint[1:-1]]
-        return rules[ref]
-    conditions, all_vals = constraint.split(' | '), []
-    for c in conditions:
-        refs, c_vals, patterns = c.split(' '), [''], []
-        for r in refs:
-            if r == ref:
-                if 'loops' not in rules:
-                    rules["loops"] = dict()
-                key = "_R" + r + "_"
-                rules["loops"][key] = constraint
-                resolved = [key]
-            else:
-                resolved = expand_rule(r, refs_map, rules)
-            c_vals = [start + end for start in c_vals for end in resolved]
-        all_vals.extend(c_vals)
-    rules[ref] = all_vals
-    return all_vals
+    def validate(self, message: str, rule: str = '0', index: int = 0):
+        r = self.rules[rule]
+        if r.type == 'simple_match':
+            if index >= len(message):
+                return False, index
+            return message[index] == r.pattern, index + 1
+        elif r.type == 'sub_rules':
+            matches = False
+            start = index
+            for p in r.pattern:
+                if p in self.cache:
+                    for matched in self.cache[p]:
+                        if len(matched) <= len(message) - start and matched == message[start:start + len(matched)]:
+                            return matches, start + len(matched)
+                for sub_rule in p.split(' '):
+                    matches, new_start = self.validate(message, sub_rule, start)
+                    if matches:
+                        start = new_start
+                    else:
+                        break
+                if matches:
+                    self.cache[p].append(message[index:start + 1])
+                else:
+                    start = index
+            return matches, start
 
 
 def parser(text) -> tuple:
     constraints, messages = text.split("\n\n")
     constraints = re.findall(r"(\d+): (.*)", constraints)
     messages = [l for l in messages.strip().split("\n")]
-    raw_refs_map = dict()
-    for r, constr in constraints:
-        raw_refs_map[r] = constr
     rules = dict()
-    # expand only the rule we need
-    expand_rule('0', raw_refs_map, rules)
-
-    return FrozenDict(rules), messages
+    for r, constr in constraints:
+        if '"' in constr:
+            rules[r] = Rule('simple_match', constr[1:-1])
+        else:
+            rules[r] = Rule('sub_rules', [c.strip() for c in constr.split('|')])
+    return rules, messages
 
 
 def read_input() -> str:
@@ -62,60 +61,13 @@ def read_input() -> str:
 
 # MAIN FUNCTIONS
 def part1(rules, messages) -> int:
-    counter, check = 0, set(rules['0'])
+    matched = []
+    re = RuleEngine(rules)
     for m in messages:
-        if m in check:
-            counter += 1
-    return counter
-
-
-@lru_cache()
-def re_wildcard(rule: str, ref_loops: dict) -> Pattern:
-    pattern = rule
-    for k in ref_loops.keys():
-        pattern = pattern.replace(k, "(.+)")
-    return re.compile(f"^{pattern}$")
-
-
-@lru_cache()
-def check_pattern(message, patterns, flat_loops, rules):
-    patterns = {re_wildcard(p, flat_loops): p
-                for p, spl in
-                patterns.items() if message.startswith(spl[0]) and message.endswith(spl[-1])}
-    m_patterns = [(p.findall(message), re.compile('_R(\d+)_').findall(patterns[p]), patterns[p]) for p in
-                  patterns.keys() if p.match(message)]
-    m_patterns = [list(zip(match[0] if type(match[0]) == tuple else match, rule)) for match, rule, _ in m_patterns]
-    for m_p in m_patterns:
-        counter = 0
-        for inner_message, ref_rule in m_p:
-            wildcards = FrozenDict({r: r.split("_") for r in rules[ref_rule] if '_R' in r})
-            check = set(r for r in rules[ref_rule] if '_R' not in r)
-            if inner_message in check:
-                counter += 1
-            elif check_pattern(inner_message, wildcards, flat_loops, rules):
-                counter += 1
-        if counter == len(m_p):
-            return True
-    return False
-
-
-def part2(rules, messages) -> int:
-    zero_rule = rules['0']
-    counter, check = 0, set(r for r in zero_rule if '_R' not in r)
-    flat_loops = dict()
-    for k in rules["loops"].keys():
-        ref_rules = rules[k.replace("_R", "").replace("_", "")]
-        flat_loops[k] = [r for r in ref_rules if '_R' in r]
-    flat_loops = FrozenDict(flat_loops)
-    wildcards = FrozenDict({r: r.split("_") for r in zero_rule if '_R' in r})
-    for m in messages:
-        if m in check:
-            # print(m)
-            counter += 1
-        elif check_pattern(m, wildcards, flat_loops, rules):
-            # print(m)
-            counter += 1
-    return counter
+        matches, index = re.validate(m)
+        if matches and index == len(m):
+            matched.append(m)
+    return len(matched)
 
 
 # TEST
@@ -128,7 +80,7 @@ def test() -> bool:
 
 aba
 """)
-    assert given == ({'0': ["aab", "aba"], '1': ["a"], '2': ["ab", "ba"], '3': ["b"]}, ['aba'])
+    assert part1(*given) == 1
     given = parser("""
 0: 4 1 5
 1: 2 3 | 3 2
@@ -143,10 +95,11 @@ abbbab
 aaabbb
 aaaabbb
 """)
-    assert given[0] == {'4': ['a'], '5': ['b'], '2': ['aa', 'bb'], '3': ['ab', 'ba'],
-                        '1': ['aaab', 'aaba', 'bbab', 'bbba', 'abaa', 'abbb', 'baaa', 'babb'],
-                        '0': ['aaaabb', 'aaabab', 'abbabb', 'abbbab', 'aabaab', 'aabbbb', 'abaaab', 'ababbb']}
+    # assert given[0] == {'4': ['a'], '5': ['b'], '2': ['aa', 'bb'], '3': ['ab', 'ba'],
+    #                     '1': ['aaab', 'aaba', 'bbab', 'bbba', 'abaa', 'abbb', 'baaa', 'babb'],
+    #                     '0': ['aaaabb', 'aaabab', 'abbabb', 'abbbab', 'aabaab', 'aabbbb', 'abaaab', 'ababbb']}
     # part1
+    # ababbb and abbbab match only
     assert part1(*given) == 2
     input = """
 42: 9 14 | 10 1

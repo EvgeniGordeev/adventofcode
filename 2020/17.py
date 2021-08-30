@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 
 # HELPER FUNCTIONS
-from copy import deepcopy
-from functools import lru_cache
 
 
-def parser(text) -> list:
-    slice_1d = [list(line) for line in text.strip().split('\n')]
-    return [[['.'] * 3 for i in range(3)], slice_1d, [['.'] * 3 for i in range(3)]]
+def parser(text) -> set:
+    data = text.strip().split('\n')
+    slice_1d = set()
+    for r, l in enumerate(data):
+        for c, p in enumerate(l):
+            if p == '#':
+                slice_1d.add((r, c, 0))
+    return slice_1d
 
 
 def read_input() -> str:
@@ -25,56 +28,58 @@ DIRS = [(z, y, x)
         if not (z == 0 and y == 0 and x == 0)]
 
 
-@lru_cache()
-def neighbors(x, y, z, size):
-    cells, c = [], sum((x, y, z))
-    for dz, dy, dx in DIRS:
-        for i in range(1, 2):
-            nz, ny, nx = z + i * dz, y + i * dy, x + i * dx
-            if -1 < nz < size and -1 < ny < size and -1 < nx < size:
-                    # and abs(sum((nz, ny, nx)) - c) in (0, 1)\
-                cells.append((nz, ny, nx))
-    return cells
+def part1(active, cycles=6):
+    for _ in range(cycles):
+        new = set()
+        xs, ys, zs = list(zip(*active))
+
+        for x in range(min(xs) - 1, max(xs) + 2):
+            for y in range(min(ys) - 1, max(ys) + 2):
+                for z in range(min(zs) - 1, max(zs) + 2):
+                    neighbors = 0
+                    for dx in [-1, 0, 1]:
+                        for dy in [-1, 0, 1]:
+                            for dz in [-1, 0, 1]:
+                                if dx != 0 or dy != 0 or dz != 0:
+                                    if (x + dx, y + dy, z + dz) in active:
+                                        neighbors += 1
+
+                    if (x, y, z) not in active and neighbors == 3:
+                        new.add((x, y, z))
+                    if (x, y, z) in active and neighbors in [2, 3]:
+                        new.add((x, y, z))
+
+        active = new
+
+    return len(active)
 
 
-def expand_visible_area(old_cube: list) -> list:
-    cube = deepcopy(old_cube)
-    size = len(cube)
-    if any('#' in xy for xy in cube[0]) or any('#' in sublist for sublist in cube[size - 1]):
-        new_size = size + 2
-        for z in cube:
-            for y in z:
-                y.insert(0, '.')
-                y.append('.')
-            z.insert(0, ['.'] * new_size)
-            z.append(['.'] * new_size)
-        cube.insert(0, [['.'] * new_size for i in range(new_size)])
-        cube.append([['.'] * new_size for i in range(new_size)])
-        return cube
-    return cube
+def part2(active, cycles=6):
+    for _ in range(cycles):
+        new = set()
+        xs, ys, zs, ws = list(zip(*active))
 
+        for x in range(min(xs) - 1, max(xs) + 2):
+            for y in range(min(ys) - 1, max(ys) + 2):
+                for z in range(min(zs) - 1, max(zs) + 2):
+                    for w in range(min(ws) - 1, max(ws) + 2):
+                        neighbors = 0
+                        for dx in [-1, 0, 1]:
+                            for dy in [-1, 0, 1]:
+                                for dz in [-1, 0, 1]:
+                                    for dw in [-1, 0, 1]:
+                                        if dx != 0 or dy != 0 or dz != 0 or dw != 0:
+                                            if (x + dx, y + dy, z + dz, w + dw) in active:
+                                                neighbors += 1
 
-def simulate_cycle(cube: list) -> list:
-    _cube = expand_visible_area(cube)
-    new_cube, size = deepcopy(_cube), len(_cube)
-    for z in range(size):
-        for y in range(size):
-            for x in range(size):
-                val, neibors = _cube[z][y][x], neighbors(x, y, z, size)
-                active = sum(1 for a, b, c in neibors if _cube[a][b][c] == '#')
-                if val == '#' and active not in (2, 3):
-                    new_cube[z][y][x] = '.'
-                elif val == '.' and active == 3:
-                    new_cube[z][y][x] = '#'
+                        if (x, y, z, w) not in active and neighbors == 3:
+                            new.add((x, y, z, w))
+                        if (x, y, z, w) in active and neighbors in [2, 3]:
+                            new.add((x, y, z, w))
 
-    return new_cube
+        active = new
 
-
-def part1(cube, cycles=1) -> int:
-    res = cube
-    for i in range(cycles):
-        res = simulate_cycle(res)
-    return sum(x.count('#') for z in res for y in z for x in y)
+    return len(active)
 
 
 # TEST
@@ -87,6 +92,10 @@ def test() -> bool:
 """)
     assert part1(given, 1) == 11
     assert part1(given, 2) == 21
+    assert part1(given) == 112
+    given_4d = list(p + (0,) for p in given)
+    assert part2(given_4d, 1) == 29
+    assert part2(given_4d) == 848
     return True
 
 
@@ -95,13 +104,15 @@ if __name__ == '__main__':
 
     model = parser(read_input())
     # ONE #1
-    part_1 = part1(model)
-    print(part_1)
-    assert part_1 == 28884
+    ans_1 = part1(model)
+    print(ans_1)
+    assert ans_1 == 232
     # # TWO #2
-    # part_2 = part2(model)
-    # print(part_2)
-    # assert part_2 == 3443997590975
+    model_4d = list(p + (0,) for p in model)
+
+    part_2 = part2(model_4d)
+    print(part_2)
+    assert part_2 == 1620
 
 # INPUT
 """🎅

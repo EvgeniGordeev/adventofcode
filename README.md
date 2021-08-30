@@ -12,7 +12,7 @@
 * https://adventofcode.com/2020
 
 * profiling with hyperfine - `brew install hyperfine`
-|Day|Name|Solution|Stats (`hyperfine -r 10 'python 2020/01.py'` or `python -m cProfile 2020/01.py` or `time python 2020/11.py`)
+|Day|Name|Solution|Stats (`hyperfine -r 10 'python 2020/01.py'` or `python -m cProfile 2020/01.py` or `time python 2020/01.py`)
 |---|---|---|---|
 |[01](https://adventofcode.com/2020/day/1)|Report Repair|[py](2020/01.py)|31.8 ms|
 |[02](https://adventofcode.com/2020/day/2)|Password Philosophy|[py](2020/02.py)|37.5 ms|
@@ -30,14 +30,14 @@
 |[14](https://adventofcode.com/2020/day/14)|Docking Data|[py](2020/14.py)|340.6 ms|
 |[15](https://adventofcode.com/2020/day/15)|Rambunctious Recitation|[py](2020/15.py)|27.816 s|
 |[16](https://adventofcode.com/2020/day/16)|Ticket Translation|[py](2020/16.py)|41.8 ms|
-|[17](https://adventofcode.com/2020/day/17)|Conway Cubes|**||
+|[17](https://adventofcode.com/2020/day/17)|Conway Cubes|**|2.576 s|
 |[18](https://adventofcode.com/2020/day/18)|Operation Order|[py](2020/18.py)|61.1 ms|
 |[19](https://adventofcode.com/2020/day/19)|Monster Messages|**||
 |[20](https://adventofcode.com/2020/day/20)|Jurassic Jigsaw|**||
 |[21](https://adventofcode.com/2020/day/21)|Allergen Assessment|[py](2020/21.py)|35.4 ms|
 |[22](https://adventofcode.com/2020/day/22)|Crab Combat|[py](2020/22.py)|120.5 ms|
-|[23](https://adventofcode.com/2020/day/23)|Crab Cups|[py](2020/23.py)**||
-|[24](https://adventofcode.com/2020/day/24)|Lobby Layout|[py](2020/24.py)|24577650 function calls in 54.416 seconds|
+|[23](https://adventofcode.com/2020/day/23)|Crab Cups|[py](2020/23.py)*|11.888 s|
+|[24](https://adventofcode.com/2020/day/24)|Lobby Layout|[py](2020/24.py)|13.104 s|
 |[25](https://adventofcode.com/2020/day/25)|Combo Breaker|[py](2020/25.py)||
 
 * or ** - external solution adopted
