@@ -11,8 +11,12 @@
 
 * https://adventofcode.com/2020
 
-* profiling with hyperfine - `brew install hyperfine`
-|Day|Name|Solution|Stats (`hyperfine -r 10 'python 2020/01.py'` or `python -m cProfile 2020/01.py` or `time python 2020/01.py`)
+* profiling with hyperfine - `brew install hyperfine`:
+  * ```hyperfine -r 10 'python 2020/01.py'```
+  * ```python -m cProfile 2020/01.py```
+  * ```time python 2020/01.py```
+
+|Day|Name|Solution|Stats|
 |---|---|---|---|
 |[01](https://adventofcode.com/2020/day/1)|Report Repair|[py](2020/01.py)|31.8 ms|
 |[02](https://adventofcode.com/2020/day/2)|Password Philosophy|[py](2020/02.py)|37.5 ms|
