@@ -6,6 +6,7 @@
 * [rust under 1 second](https://timvisee.com/blog/solving-aoc-2020-in-under-a-second/)
 * [rust under 1 second #2](https://www.forrestthewoods.com/blog/solving-advent-of-code-in-under-a-second/)
 * https://github.com/narimiran/AdventOfCode2020
+* https://github.com/mebeim/aoc/tree/master/2020
 
 ## 2020
 
@@ -34,10 +35,10 @@
 |[14](https://adventofcode.com/2020/day/14)|Docking Data|[py](2020/14.py)|340.6 ms|
 |[15](https://adventofcode.com/2020/day/15)|Rambunctious Recitation|[py](2020/15.py)|27.816 s|
 |[16](https://adventofcode.com/2020/day/16)|Ticket Translation|[py](2020/16.py)|41.8 ms|
-|[17](https://adventofcode.com/2020/day/17)|Conway Cubes|**|2.576 s|
+|[17](https://adventofcode.com/2020/day/17)|Conway Cubes|[py](2020/17.py)**|2.576 s|
 |[18](https://adventofcode.com/2020/day/18)|Operation Order|[py](2020/18.py)|61.1 ms|
-|[19](https://adventofcode.com/2020/day/19)|Monster Messages|**||
-|[20](https://adventofcode.com/2020/day/20)|Jurassic Jigsaw|**||
+|[19](https://adventofcode.com/2020/day/19)|Monster Messages|[py](2020/19.py)*|368.6 ms|
+|[20](https://adventofcode.com/2020/day/20)|Jurassic Jigsaw|[py](2020/20.py)**||
 |[21](https://adventofcode.com/2020/day/21)|Allergen Assessment|[py](2020/21.py)|35.4 ms|
 |[22](https://adventofcode.com/2020/day/22)|Crab Combat|[py](2020/22.py)|120.5 ms|
 |[23](https://adventofcode.com/2020/day/23)|Crab Cups|[py](2020/23.py)*|11.888 s|

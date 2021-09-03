@@ -2,7 +2,9 @@
 
 # HELPER FUNCTIONS
 import re
-from copy import deepcopy
+from collections import namedtuple
+
+Rule = namedtuple('Rule', 'type pattern')
 
 
 def parser(text) -> tuple:
@@ -11,14 +13,10 @@ def parser(text) -> tuple:
     messages = [l for l in messages.strip().split("\n")]
     rules = dict()
     for r, constr in constraints:
-        rule_id = int(r)
         if '"' in constr:
-            rule = constr[1:-1]
+            rules[r] = Rule('=', constr[1:-1])
         else:
-            rule = []
-            for option in constr.split('|'):
-                rule.append(tuple(map(int, option.split())))
-        rules[rule_id] = rule
+            rules[r] = Rule('re', [c.strip() for c in constr.split('|')])
     return rules, messages
 
 
@@ -29,43 +27,62 @@ def read_input() -> str:
     return data
 
 
-# MAIN FUNCTIONS
-def match(rules: dict, msg: str, rule=0, index=0) -> list[int]:
-    if index == len(msg):
-        return []
+def part1_re(rules, messages):
+    def getre(rulenum):
+        # for part 1, delete these two rules:
+        # if rulenum == '8':
+        #     return getre('42') + '+'
+        # elif rulenum == '11':
+        #     a = getre('42')
+        #     b = getre('31')
+        #     return '(?:' + '|'.join(f'{a}{{{n}}}{b}{{{n}}}' for n in range(1, 100)) + ')'
 
-    rule = rules[rule]
-    if type(rule) is str:
-        if msg[index] == rule:
-            return [index + 1]
-        return []
+        rule = rules[rulenum]
+        if rule.type == '=':
+            return rule.pattern
+        else:
+            parts = rule.pattern
+            res = []
+            for part in parts:
+                nums = part.split(' ')
+                res.append(''.join(getre(num) for num in nums))
+            return '(?:' + '|'.join(res) + ')'
 
-    matches = []
-    for option in rule:
-        sub_matches = [index]
-
-        for sub_rule in option:
-            new_matches = []
-            for idx in sub_matches:
-                new_matches += match(rules, msg, sub_rule, idx)
-            sub_matches = new_matches
-
-        matches += sub_matches
-
-    return matches
-
-
-def part1(rules, messages) -> int:
-    matched = []
+    z = getre('0')
+    ans = []
     for m in messages:
-        matches = match(rules, m)
-        if len(m) in matches:
-            matched.append(m)
-    return len(matched)
+        if re.fullmatch(z, m):
+            ans.append(m)
+    return len(ans)
 
 
-def part2(rules, messages) -> int:
-    return part1(rules, messages)
+def part2_re(rules, messages):
+    def getre(rulenum):
+        # for part 1, delete these two rules:
+        if rulenum == '8':
+            return getre('42') + '+'
+        elif rulenum == '11':
+            a = getre('42')
+            b = getre('31')
+            return '(?:' + '|'.join(f'{a}{{{n}}}{b}{{{n}}}' for n in range(1, 100)) + ')'
+
+        rule = rules[rulenum]
+        if rule.type == '=':
+            return rule.pattern
+        else:
+            parts = rule.pattern
+            res = []
+            for part in parts:
+                nums = part.split(' ')
+                res.append(''.join(getre(num) for num in nums))
+            return '(?:' + '|'.join(res) + ')'
+
+    z = getre('0')
+    ans = []
+    for m in messages:
+        if re.fullmatch(z, m):
+            ans.append(m)
+    return len(ans)
 
 
 # TEST
@@ -80,7 +97,7 @@ aab
 aba
 bab
 """)
-    assert part1(*given) == 2
+    assert part1_re(*given) == 2
     given = parser("""
 0: 4 1 5
 1: 2 3 | 3 2
@@ -95,7 +112,9 @@ bababa
 aaabbb
 aaaabbb
 """)
-    assert part1(*given) == 2
+    # part1
+    # ababbb and abbbab match only
+    assert part1_re(*given) == 2
     input = """
 42: 9 14 | 10 1
 9: 14 27 | 1 26
@@ -146,12 +165,9 @@ babaaabbbaaabaababbaabababaaab
 aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba
 """
     # bbabbbbaabaabba, ababaaaaaabaaab, and ababaaaaabbbaba
-    rules, messages = parser(input)
-    assert part1(rules, messages) == 3
-    rules2 = deepcopy(rules)
-    rules2[8] = [(42,), (42, 8)]
-    rules2[11] = [(42, 31), (42, 11, 31)]
-    assert part2(rules2, messages) == 12
+    assert part1_re(*parser(input)) == 3
+    input2 = input.replace("8: 42", "8: 42 | 42 8").replace("11: 42 31", "11: 42 31 | 42 11 31")
+    assert part2_re(*parser(input2)) == 12
     # part2
     return True
 
@@ -162,12 +178,12 @@ if __name__ == '__main__':
     input = read_input()
     rules, messages = parser(input)
     # # ONE #1
-    part_1 = part1(rules, messages)
+    part_1 = part1_re(rules, messages)
     print(part_1)
     assert part_1 == 226
     # # # TWO #2
     input2 = input.replace("8: 42", "8: 42 | 42 8").replace("11: 42 31", "11: 42 31 | 42 11 31")
-    part_2 = part2(*parser(input2))
+    part_2 = part2_re(*parser(input2))
     print(part_2)
     assert part_2 == 355
 
