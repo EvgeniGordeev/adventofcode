@@ -1,16 +1,25 @@
 #!/usr/bin/env python3
 import re
 # HELPER FUNCTIONS
-from functools import reduce, lru_cache
+from functools import lru_cache
 from itertools import starmap
 from math import isqrt
-from typing import Set, List
+from typing import List
 
 
 class Tile(object):
     def __init__(self, num, grid):
         self.num = num
         self.grid = grid
+
+        def to_int(side: str) -> int:
+            return int(side.replace('.', '0').replace('#', '1'), 2)
+
+        north = to_int(grid[0])
+        east = to_int(''.join([r[0] for r in grid]))
+        south = to_int(grid[-1])
+        west = to_int(''.join([r[-1] for r in grid]))
+        self.sides = [north, east, south, west]
 
     def __repr__(self):
         return f"Tile({self.num})"
@@ -20,6 +29,12 @@ class Tile(object):
 
     def __eq__(self, other):
         return self.num == other.num
+
+
+def read_txt(path: str) -> str:
+    with open(path, 'r') as file:
+        data = file.read()
+        return data
 
 
 def parser(text) -> list:
@@ -77,108 +92,29 @@ def _check_upper(upper: Tile, lower: Tile):
     return upper.grid[-1] == lower.grid[0]
 
 
-class Board(object):
-    def __init__(self, n):
-        self.size = n
-        self.grid = [[None for i in range(self.size)] for j in range(self.size)]
-        self.next_pos = 0
-        self.valid = True
-        self.solved = False
-        self.tiles_flat_num = ''
-
-    def add_tile(self, tile: Tile):
-        if self.is_valid() and not self.is_solved():
-            x = self.next_pos % self.size
-            y = self.next_pos // self.size
-            self.grid[y][x] = tile
-            self.tiles_flat_num = ','.join([str(self.grid[i][j].num)
-                                            for i in range(self.size)
-                                            for j in range(self.size)
-                                            if self.grid[i][j] is not None])
-            # validate
-            if self.next_pos > 0:
-                rotate_first = True or self.next_pos == 1
-                if x - 1 > -1:
-                    left = self.grid[y][x - 1]
-                    self.grid[y][x - 1], self.grid[y][x], self.valid = validate(left, tile, _check_left, rotate_first)
-                if self.valid and y - 1 > -1:
-                    upper = self.grid[y - 1][x]
-                    self.grid[y - 1][x], self.grid[y][x], self.valid = validate(upper, tile, _check_upper, rotate_first)
-            self.next_pos += 1
-            self.solved = self.valid and self.next_pos == self.size ** 2
-
-    def is_valid(self) -> bool:
-        return self.valid
-
-    def __contains__(self, tile: Tile):
-        return tile.num in self.tiles_flat_num
-
-    def __hash__(self):
-        return hash(self.tiles_flat_num)
-
-    def __eq__(self, other):
-        return self.tiles_flat_num == other.tiles_flat_num
-
-    def __repr__(self):
-        return f"Board({self.tiles_flat_num})"
-
-    def is_solved(self):
-        return self.solved
-
-    def copy(self):
-        c = Board(self.size)
-        c.grid = [[self.grid[y][x] for x in range(self.size)] for y in range(self.size)]
-        c.next_pos = self.next_pos
-        c.valid = self.valid
-        c.solved = self.solved
-        c.tiles_flat_num = self.tiles_flat_num
-        return c
-
-    def print(self, with_num=False):
-        for row in self.grid:
-            for l_num in range(-1 if with_num else 0, 10):
-                for col in row:
-                    if col is None:
-                        break
-                    if with_num and l_num == -1:
-                        print(f"   {col.num}    ", end='')
-                    else:
-                        print(f"{col.grid[l_num]}  ", end='')
-                print("")
-            print("\n")
-
-    def mult(self):
-        n, gr = self.size - 1, self.grid
-        return reduce((lambda x, y: x * y), [gr[0][0].num, gr[0][n].num, gr[n][0].num, gr[n][n].num])
-
-
 # MAIN FUNCTIONS
-def solve_game(tiles: list, boards: Set[Board], board: Board):
-    if len(tiles) == 0:
-        return
-    if str(board) == 'Board(1951,2311,3079,2729,1427,2473)':
-        board.print(with_num=True)
-    print(f"tiles={len(tiles)}")
+
+def backtrack(square: list[Tile], tiles: list[Tile], side_size: int) -> list[Tile]:
+    if len(square) == side_size ** 2:
+        return square
+
     for i, t in enumerate(tiles):
-        b = board.copy()
-        b.add_tile(t)
-        if b.is_valid() and b not in boards:
-            if board in boards:
-                boards.remove(board)
-            boards.add(b)
-            sub = tiles.copy()
-            del sub[i]
-            solve_game(sub, boards, b)
-    if board in boards and not board.is_solved():
-        boards.remove(board)
+
+        square = backtrack(square + [t], tiles[:i] + tiles[i + 1:], side_size)
+
+    return square
 
 
 def part1(tiles) -> int:
-    boards = set()
-    solve_game(tiles, boards, Board(isqrt(len(tiles))))
-    if len(boards) > 0:
-        b = next(iter(boards))
-        return b.mult()
+    l = len(tiles)
+    n = isqrt(l)
+
+    for i, t in enumerate(tiles):
+        image = backtrack([t], tiles[:i] + tiles[i + 1:], n)
+        if len(image) == l:
+            # multiply corners of the image tiles
+            return image[0].num * image[n - 1].num * image[-1].num * image[-n].num
+
     return -1
 
 
@@ -197,115 +133,7 @@ def part1(tiles) -> int:
 # TEST
 def test() -> bool:
     # GIVEN
-    given = parser("""
-Tile 2311:
-..##.#..#.
-##..#.....
-#...##..#.
-####.#...#
-##.##.###.
-##...#.###
-.#.#.#..##
-..#....#..
-###...#.#.
-..###..###
-
-Tile 1951:
-#.##...##.
-#.####...#
-.....#..##
-#...######
-.##.#....#
-.###.#####
-###.##.##.
-.###....#.
-..#.#..#.#
-#...##.#..
-
-Tile 1171:
-####...##.
-#..##.#..#
-##.#..#.#.
-.###.####.
-..###.####
-.##....##.
-.#...####.
-#.##.####.
-####..#...
-.....##...
-
-Tile 1427:
-###.##.#..
-.#..#.##..
-.#.##.#..#
-#.#.#.##.#
-....#...##
-...##..##.
-...#.#####
-.#.####.#.
-..#..###.#
-..##.#..#.
-
-Tile 1489:
-##.#.#....
-..##...#..
-.##..##...
-..#...#...
-#####...#.
-#..#.#.#.#
-...#.#.#..
-##.#...##.
-..##.##.##
-###.##.#..
-
-Tile 2473:
-#....####.
-#..#.##...
-#.##..#...
-######.#.#
-.#...#.#.#
-.#########
-.###.#..#.
-########.#
-##...##.#.
-..###.#.#.
-
-Tile 2971:
-..#.#....#
-#...###...
-#.#.###...
-##.##..#..
-.#####..##
-.#..####.#
-#..#.#..#.
-..####.###
-..#.#.###.
-...#.#.#.#
-
-Tile 2729:
-...#.#.#.#
-####.#....
-..#.#.....
-....#..#.#
-.##..##.#.
-.#.####...
-####.#.#..
-##.####...
-##..#.##..
-#.##...##.
-
-Tile 3079:
-#.#.#####.
-.#..######
-..#.......
-######....
-####.#..#.
-.#...#.##.
-#.#####.##
-..#.###...
-..#.......
-..#.###...
-""")
+    given = parser(read_txt('./20_test.txt'))
     assert part1(given) == 20899048083289
     return True
 
