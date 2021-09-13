@@ -1,13 +1,5 @@
 # adventofcode
 
-* https://adventofcode.com
-* [Collection of external solutions](https://github.com/Bogdanp/awesome-advent-of-code)
-* [300 stars and visualizations](https://github.com/surgi1/adventofcode)
-* [rust under 1 second](https://timvisee.com/blog/solving-aoc-2020-in-under-a-second/)
-* [rust under 1 second #2](https://www.forrestthewoods.com/blog/solving-advent-of-code-in-under-a-second/)
-* https://github.com/narimiran/AdventOfCode2020
-* https://github.com/mebeim/aoc/tree/master/2020
-
 ## 2020
 
 * https://adventofcode.com/2020
@@ -72,7 +64,13 @@ chmod +x get.sh
 ./get.sh
 ```
 
-## Py Tops from Leaderboard
+## External help
 
 * https://github.com/sophiebits/adventofcode
 * https://github.com/arknave/advent-of-code-2020
+* [Collection of external solutions](https://github.com/Bogdanp/awesome-advent-of-code)
+* [300 stars and visualizations](https://github.com/surgi1/adventofcode)
+* [rust under 1 second](https://timvisee.com/blog/solving-aoc-2020-in-under-a-second/)
+* [rust under 1 second #2](https://www.forrestthewoods.com/blog/solving-advent-of-code-in-under-a-second/)
+* https://github.com/narimiran/AdventOfCode2020
+* https://github.com/mebeim/aoc/tree/master/2020 (walk-through)
