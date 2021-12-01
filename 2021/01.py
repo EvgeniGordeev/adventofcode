@@ -23,13 +23,14 @@ def part1(depths) -> int:
 
 
 def part2(depths) -> int:
-    count, sliding_window = 0, depths[0:3]
-    prev_sum = sum(sliding_window)
+    # sliding window of 3
+    a, b, c = depths[:3]
+    prev_sum = a + b + c
+
+    count = 0
     for d in depths[3:]:
-        sliding_window.pop(0)
-        sliding_window.append(d)
-        new_sum = sum(sliding_window)
-        if new_sum > prev_sum:
+        a, b, c = b, c, d
+        if (new_sum := a + b + c) > prev_sum:
             count += 1
         prev_sum = new_sum
     return count
