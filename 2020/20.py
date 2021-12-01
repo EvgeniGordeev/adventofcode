@@ -1,25 +1,26 @@
 #!/usr/bin/env python3
 import re
 # HELPER FUNCTIONS
-from functools import lru_cache
 from itertools import starmap
 from math import isqrt
-from typing import List
 
 
 class Tile(object):
     def __init__(self, num, grid):
         self.num = num
-        self.grid = grid
+        if len(grid) == 4:
+            self.sides = grid
+        else:
+            self.grid = grid
+            self.sides = {
+                'n': grid[0],
+                'e': ''.join([r[0] for r in grid]),
+                's': grid[-1],
+                'w': ''.join([r[-1] for r in grid]),
+            }
 
-        def to_int(side: str) -> int:
-            return int(side.replace('.', '0').replace('#', '1'), 2)
-
-        north = to_int(grid[0])
-        east = to_int(''.join([r[0] for r in grid]))
-        south = to_int(grid[-1])
-        west = to_int(''.join([r[-1] for r in grid]))
-        self.sides = [north, east, south, west]
+    def flip(self):
+        return Tile(self.num, {k: v[::-1] for k, v in self.sides.values()})
 
     def __repr__(self):
         return f"Tile({self.num})"
@@ -50,70 +51,40 @@ def read_input() -> str:
     return data
 
 
-@lru_cache()
-def validate(other: Tile, tile: Tile, validator, rotate_first: False):
-    it, this = other, tile
-    for i in range(8 if rotate_first else 1):
-        if i != 0:
-            it = Tile(it.num, rotate(it.grid))
-        for j in range(8):
-            if j != 0:
-                this = Tile(this.num, rotate(this.grid))
-            if validator(it, this):
-                return it, this, True
-            if j == 3:
-                this = Tile(this.num, flip_x(this.grid))
-        if i == 3:
-            it = Tile(it.num, flip_x(it.grid))
-
-    return other, tile, False
-
-
-def rotate(arr_2d: List[str]):
-    return list(map(lambda v: ''.join(v), list(zip(*arr_2d[::-1]))))
-
-
-def flip_x(arr_2d: List[str]):
-    return [row[::-1] for row in arr_2d]
-
-
-def flip_y(arr_2d: List[str]):
-    return [row for row in arr_2d[::-1]]
-
-
-def _check_left(left: Tile, right: Tile):
-    for i in range(len(left.grid)):
-        if left.grid[i][-1] != right.grid[i][0]:
-            return False
-    return True
-
-
-def _check_upper(upper: Tile, lower: Tile):
-    return upper.grid[-1] == lower.grid[0]
+def print_grid(grid):
+    print('====')
+    for l in grid:
+        print(l)
 
 
 # MAIN FUNCTIONS
 
 def backtrack(square: list[Tile], tiles: list[Tile], side_size: int) -> list[Tile]:
-    if len(square) == side_size ** 2:
+    if len(square) == side_size ** 2 or len(tiles) == 0:
         return square
 
+    def can_assemble(s: list[Tile], tile: Tile) -> bool:
+        return s[-1].sides[1] == tile.sides[3]
+
     for i, t in enumerate(tiles):
+        for j in range(4):
+            new_t = Tile(t.num, t.sides[j:] + t.sides[:j])
+            if len(square) == 0 or can_assemble(square, new_t):
+                image = backtrack(square[:] + [new_t], tiles[:i] + tiles[i + 1:], side_size)
+                if len(image) == side_size ** 2 == 0:
+                    return image
 
-        square = backtrack(square + [t], tiles[:i] + tiles[i + 1:], side_size)
-
-    return square
+    return []
 
 
 def part1(tiles) -> int:
     l = len(tiles)
     n = isqrt(l)
+    image = backtrack([], tiles, n)
 
-    for i, t in enumerate(tiles):
-        image = backtrack([t], tiles[:i] + tiles[i + 1:], n)
-        if len(image) == l:
-            # multiply corners of the image tiles
-            return image[0].num * image[n - 1].num * image[-1].num * image[-n].num
+    if len(image) == l:
+        # multiply corners of the image tiles
+        return image[0].num * image[n - 1].num * image[-1].num * image[-n].num
 
     return -1
 
@@ -134,6 +105,11 @@ def part1(tiles) -> int:
 def test() -> bool:
     # GIVEN
     given = parser(read_txt('./20_test.txt'))
+    # 1951    2311    3079
+    # 2729    1427    2473
+    # 2971    1489    1171
+    # ====================
+    # 1951 * 3079 * 2971 * 1171
     assert part1(given) == 20899048083289
     return True
 
