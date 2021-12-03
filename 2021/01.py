@@ -68,7 +68,7 @@ if __name__ == '__main__':
     # TWO #2
     part_2 = part2(nums)
     print(part_2)
-    # assert part_2 == 8984
+    assert part_2 == 1471
 
 # INPUT
 """🎅

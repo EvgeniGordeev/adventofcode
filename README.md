@@ -12,5 +12,6 @@
 |Day|Name|Solution|Stats|
 |---|---|---|---|
 |[01](https://adventofcode.com/2021/day/1)|Sonar Sweep|[py](2021/01.py)|19.3 ms|
+|[02](https://adventofcode.com/2021/day/2)|Dive|[py](2021/02.py)|21.6 ms|
 
 * or ** - external solution adopted

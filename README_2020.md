@@ -46,9 +46,8 @@ download input of last day:
 * install:
 
 ```bash
-go get -u github.com/GreenLightning/advent-of-code-downloader/aocdl
-go build -v github.com/GreenLightning/advent-of-code-downloader/aocdl
-mv aocdl /usr/local/bin/
+go install github.com/GreenLightning/advent-of-code-downloader/aocdl@latest
+cp $(go env GOPATH)/bin/aocdl /usr/local/bin/
 echo '{"session-cookie": "xxx"}' > $HOME/.aocdlconfig
 echo "
 #!/usr/bin/env bash
