@@ -108,7 +108,7 @@ if __name__ == '__main__':
     # # TWO #2
     part_2 = part2(*input_)
     print(part_2)
-    # assert part_2 == 3969126
+    assert part_2 == 13912
 
 # INPUT
 """🎅
