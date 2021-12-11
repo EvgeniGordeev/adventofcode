@@ -17,31 +17,21 @@ def read_input() -> str:
 
 # MAIN FUNCTIONS
 @lru_cache(maxsize=None)
-def count_fish(fish: tuple, days: int):
+def count_fish(fishes: tuple, days: int):
     """
-    divide-and-conquer days and list
+    divide-and-conquer days and fishes
     """
-    if len(fish) == 1:
-        school = list(fish)
-        batch = 8
-        for d in range(days):
-            new_school, new_fish = [], []
-            for f in school:
-                if f == 0:
-                    new_school.append(6)
-                    new_fish.append(8)
-                else:
-                    new_school.append(f - 1)
-            school = new_school + new_fish
-            if d != 0 and d % batch == 0:
-                ans = len(school)
-                for f in school:
-                    ans += count_fish((f,), days - d - 1) - 1
-                return ans
-        return len(school)
+    if days == 0:
+        return len(fishes)
+    if len(fishes) == 1:
+        fish = fishes[0]
+        if fish < days:
+            return count_fish((6, 8), days - fish - 1)
+        else:
+            return 1
     else:
-        middle = len(fish) // 2
-        return count_fish(fish[:middle], days) + count_fish(fish[middle:], days)
+        middle = len(fishes) // 2
+        return count_fish(fishes[:middle], days) + count_fish(fishes[middle:], days)
 
 
 def part1(fish: list, days=80) -> int:
@@ -55,6 +45,14 @@ def part2(fish: list, days: int) -> int:
 # TEST
 def test():
     # GIVEN
+    assert part1([1], 2) == 2
+    assert part1([3, 4, 3, 1, 2], 1) == 5
+    assert part1([3, 4, 3, 1, 2], 2) == 6
+    assert part1([3, 4, 3, 1, 2], 3) == 7
+    assert part1([3, 4, 3, 1, 2], 7) == 10
+    assert part1([3, 4, 3, 1, 2], 8) == 10
+    assert part1([3, 4, 3, 1, 2], 9) == 11
+
     given = parser("3,4,3,1,2")
     assert part1(given, 18) == 26
     assert part1(given) == 5934
