@@ -21,8 +21,9 @@ To profile with hyperfine - ```brew install hyperfine```
 | [03](https://adventofcode.com/2021/day/3) | Binary Diagnostic    | [py](2021/03.py)  | 18.9 ms         |
 | [04](https://adventofcode.com/2021/day/4) | Giant Squid          | [py](2021/04.py)  | 42.2 ms         |
 | [05](https://adventofcode.com/2021/day/5) | Hydrothermal Venture | [py](2021/05.py)  | 620 ms, 85 ms * |
+| [06](https://adventofcode.com/2021/day/6) | Lanternfish          | [py](2021/06.py)  | 18.0 ms         |
 | ---                                       | ---                  | ---               | ---             |
-| [all](https://adventofcode.com/2021)      | AoC 21               | [py](2021/all.py) | 105 ms          |
+| [all](https://adventofcode.com/2021)      | AoC 21               | [py](2021/all.py) | 225 ms          |
 
 * or ** - external solution adopted
 
