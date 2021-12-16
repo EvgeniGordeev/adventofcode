@@ -20,4 +20,6 @@ jobs:
         run: |
           cp 2021/solutions.txt solutions_temp.txt
           hyperfine -r 10 'python 2021/all.py'
-          cmp -s 2021/solutions.txt solutions_temp.txt || echo "ERROR" && exit 1
+          echo "=== All Solutions ==="
+          cat 2021/solutions.txt
+          cmp -s 2021/solutions.txt solutions_temp.txt || {echo "ERROR: Some solution assertions failed"; exit 1}
