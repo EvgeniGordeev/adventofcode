@@ -75,7 +75,7 @@ if __name__ == '__main__':
     assert test()
     input_ = parser(read_input())
     # ONE #1
-    part_1 = part2(input_, 80)
+    part_1 = part1(input_, 80)
     print(part_1)
     assert part_1 == 343441
     # TWO #2
