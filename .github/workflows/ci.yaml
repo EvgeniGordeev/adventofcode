@@ -8,13 +8,14 @@ on:
       - master
 
 jobs:
-  build:
-    runs-on: python:3.9-alpine
+  testbox:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.9-alpine
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
-        run: |
-          apk add hyperfine
+        run: apk add hyperfine
       - name: Run all and compare
         run: |
           cp 2021/solutions.txt solutions_temp.txt
