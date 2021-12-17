@@ -1,5 +1,7 @@
 # adventofcode
 
+
+![https://github.com/EvgeniGordeev/adventofcode](https://img.shields.io/badge/repo%20--green)
 ## 2021
 
 ![](https://img.shields.io/badge/stars%20⭐-16-yellow)
@@ -25,7 +27,7 @@ To profile with hyperfine - ```brew install hyperfine```
 | [07](https://adventofcode.com/2021/day/7) | The Treachery of Whales | [py](2021/07.py)                          | 20.8 ms         |
 | [08](https://adventofcode.com/2021/day/8) | Seven Segment Search    | [py](2021/08.py)                          | 17.5 ms         |
 | ---                                       | ---                     | ---                                       | ---             |
-| [all](https://adventofcode.com/2021)      | AoC 21                  | [py](2021/all.py) [txt](2021/answers.txt) | 263 ms (441 ms) |
+| [all](https://adventofcode.com/2021)      | AoC 21                  | [py](2021/all.py) [txt](2021/answers.txt) | 263 ms (447 ms) |
 
 * or ** - external solution adopted
 

@@ -71,9 +71,9 @@ for dig in digit_to_segment.values():
         segment_count[segment] += 1
 assert segment_count == {'a': 8, 'b': 6, 'c': 8, 'd': 7, 'e': 4, 'f': 9, 'g': 7}
 
-digit_to_count = {k: sum(segment_count[seg] for seg in v) for k, v in digit_to_segment.items()}
-assert digit_to_count == {0: 42, 1: 17, 2: 34, 3: 39, 4: 30, 5: 37, 6: 41, 7: 25, 8: 49, 9: 45}
-segment_count_to_digit = {v: k for k, v in digit_to_count.items()}
+digit_to_segment_count = {k: sum(segment_count[seg] for seg in v) for k, v in digit_to_segment.items()}
+assert digit_to_segment_count == {0: 42, 1: 17, 2: 34, 3: 39, 4: 30, 5: 37, 6: 41, 7: 25, 8: 49, 9: 45}
+segment_count_to_digit = {v: k for k, v in digit_to_segment_count.items()}
 # each number has a unique value of segment_count
 assert segment_count_to_digit == {42: 0, 17: 1, 34: 2, 39: 3, 30: 4, 37: 5, 41: 6, 25: 7, 49: 8, 45: 9}
 
