@@ -1,7 +1,7 @@
 # adventofcode
 
+[EvgeniGordeev/adventofcode](https://github.com/EvgeniGordeev/adventofcode)
 
-![https://github.com/EvgeniGordeev/adventofcode](https://img.shields.io/badge/repo%20--green)
 ## 2021
 
 ![](https://img.shields.io/badge/stars%20⭐-16-yellow)
