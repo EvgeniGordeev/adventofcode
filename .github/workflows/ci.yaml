@@ -1,4 +1,4 @@
-name: Run Python Tests
+name: AoC solutions
 on:
   push:
     branches:
@@ -18,8 +18,8 @@ jobs:
         run: apk add hyperfine
       - name: Run all and compare
         run: |
-          cp 2021/solutions.txt solutions_temp.txt
-          hyperfine -r 10 'python 2021/all.py'
+          cp 2021/answers.txt answers.tmp.txt
+          hyperfine --warmup 3 -r 10 'python 2021/all.py'
           echo "=== All Solutions ==="
-          cat 2021/solutions.txt
-          cmp -s 2021/solutions.txt solutions_temp.txt || exit 1
+          cat 2021/answers.txt
+          cmp -s 2021/answers.txt answers.tmp.txt || exit 1

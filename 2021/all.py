@@ -22,7 +22,7 @@ def call_out(command: str, **kwargs):
 if __name__ == '__main__':
     dir_ = os.path.dirname(os.path.abspath(__file__))
     sols = sorted([f for f in os.listdir(dir_) if re.match(r'^\d+\.py$', f)])
-    with open(os.path.join(dir_, 'solutions.txt'), 'w') as out:
+    with open(os.path.join(dir_, 'answers.txt'), 'w') as out:
         for s in sols:
             mes = f"===Running {s}==="
             print(mes)
