@@ -75,8 +75,8 @@ def part2(rows: list) -> int:
             if is_low_point(rows, r, c):
                 basin = set()
                 find_basin(rows, r, c, basin)
-                size = len(basin)
-                heappushpop(heap, size)
+                # min value is always popped leaving 3 largest values in the heap
+                heappushpop(heap, len(basin))
     return math.prod(heap)
 
 
