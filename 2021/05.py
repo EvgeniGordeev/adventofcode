@@ -231,7 +231,7 @@ if __name__ == '__main__':
     # p1, p2 = part1_v2, part2_v2 # 101 ms
     # p1, p2 = part1_v3, part2_v3  # 103 ms
     # p1, p2 = part1_v4, part2_v4  # 87 ms
-    p1, p2 = part1_improved, part2_improved  # 104 ms
+    p1, p2 = part1_improved, part2_improved  # 85 ms
     assert test(p1, p2)
     input_ = parser(read_input())
     # ONE #1
