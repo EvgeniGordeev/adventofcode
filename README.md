@@ -26,7 +26,7 @@ To profile with hyperfine - ```brew install hyperfine```
 | [06](https://adventofcode.com/2021/day/6) | Lanternfish             | [py](2021/06.py)                          | 18 ms           |
 | [07](https://adventofcode.com/2021/day/7) | The Treachery of Whales | [py](2021/07.py)                          | 21 ms           |
 | [08](https://adventofcode.com/2021/day/8) | Seven Segment Search    | [py](2021/08.py)                          | 18 ms           |
-| [09](https://adventofcode.com/2021/day/9) | Smoke Basin             | [py](2021/09.py)                          | 37 ms           |
+| [09](https://adventofcode.com/2021/day/9) | Smoke Basin             | [py](2021/09.py)                          | 26 ms           |
 | ---                                       | ---                     | ---                                       | ---             |
 | [all](https://adventofcode.com/2021)      | AoC 21                  | [py](2021/all.py) [txt](2021/answers.txt) | 304 ms (447 ms) |
 

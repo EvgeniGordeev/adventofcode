@@ -51,10 +51,12 @@ def part1(rows: list) -> int:
 
 
 def find_basin(grid, row, col, basin: set):
+    # adding second check improved performance from 37 to 26 ms
+    if grid[row][col] == 9 or (row, col) in basin:
+        return
+
     h, w = len(grid), len(grid[0])
     val = grid[row][col]
-    if val == 9:
-        return
     basin.add((row, col))
     if col + 1 < w and val < grid[row][col + 1]:  # right
         find_basin(grid, row, col + 1, basin)
