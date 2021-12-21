@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# HELPER FUNCTIONS
+
 import statistics
 from functools import reduce
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-# HELPER FUNCTIONS
-
 
 # INPUT
 import math

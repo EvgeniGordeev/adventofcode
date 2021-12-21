@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# HELPER FUNCTIONS
+
 import re
 from copy import deepcopy
 from functools import reduce

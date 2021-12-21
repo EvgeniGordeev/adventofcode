@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# HELPER FUNCTIONS
+
 import os
 import re
 import subprocess

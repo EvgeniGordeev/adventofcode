@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# HELPER FUNCTIONS
+
 import re
 from collections import Counter, defaultdict
 

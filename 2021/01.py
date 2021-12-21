@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# HELPER FUNCTIONS
+
 def parser(text) -> list:
     return [int(i) for i in text.split('\n')]
 
