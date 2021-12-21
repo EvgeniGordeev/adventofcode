@@ -4,9 +4,9 @@
 
 ## 2021
 
-![](https://img.shields.io/badge/stars%20⭐-18-yellow)
-![](https://img.shields.io/badge/day%20📅-20-blue)
-![](https://img.shields.io/badge/days%20completed-9-red)
+![](https://img.shields.io/badge/stars%20⭐-20-yellow)
+![](https://img.shields.io/badge/day%20📅-21-blue)
+![](https://img.shields.io/badge/days%20completed-10-red)
 
 https://adventofcode.com/2021
 
@@ -27,7 +27,7 @@ To profile with hyperfine - ```brew install hyperfine```
 | [07](https://adventofcode.com/2021/day/7)  | The Treachery of Whales | [py](2021/07.py)                          | 21 ms           |
 | [08](https://adventofcode.com/2021/day/8)  | Seven Segment Search    | [py](2021/08.py)                          | 18 ms           |
 | [09](https://adventofcode.com/2021/day/9)  | Smoke Basin             | [py](2021/09.py)                          | 26 ms           |
-| [10](https://adventofcode.com/2021/day/10) |                         |                                           |                 |
+| [10](https://adventofcode.com/2021/day/10) | Syntax Scoring          | [py](2021/10.py)                          | 17 ms           |
 | [11](https://adventofcode.com/2021/day/11) |                         |                                           |                 |
 | [12](https://adventofcode.com/2021/day/12) |                         |                                           |                 |
 | [13](https://adventofcode.com/2021/day/13) |                         |                                           |                 |
@@ -39,7 +39,7 @@ To profile with hyperfine - ```brew install hyperfine```
 | [19](https://adventofcode.com/2021/day/19) |                         |                                           |                 |
 | [20](https://adventofcode.com/2021/day/20) | Trench Map              | [py](2021/20.py)                          | 199 ms**        |
 | ---                                        | ---                     | ---                                       | ---             |
-| [all](https://adventofcode.com/2021)       | AoC 21                  | [py](2021/all.py) [txt](2021/answers.txt) | 500 ms (447 ms) |
+| [all](https://adventofcode.com/2021)       | AoC 21                  | [py](2021/all.py) [txt](2021/answers.txt) | 527 ms (447 ms) |
 
 * or ** - external solution adopted
 
