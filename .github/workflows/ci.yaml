@@ -12,13 +12,13 @@ jobs:
   testbox:
     runs-on: ubuntu-latest
     container:
-      image: python:3.9-alpine
+      image: python:3.9-slim
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: |
+          apt-get -y install hyperfine
           pip install -r requirements.txt
-          apk add hyperfine
       - name: Run all and compare
         run: |
           cp 2021/answers.txt answers.tmp.txt
