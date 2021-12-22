@@ -31,4 +31,4 @@ jobs:
           filename: runtime-badge.json
           label: Runtime
           message: ${{ env.RUNTIME_BADGE }}
-          color: orange
+          color: blue
