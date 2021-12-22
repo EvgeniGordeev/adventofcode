@@ -1,6 +1,6 @@
 # adventofcode
 [![example workflow](https://github.com/EvgeniGordeev/adventofcode/actions/workflows/ci.yaml/badge.svg)](https://github.com/EvgeniGordeev/adventofcode/actions)
-![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/EvgeniGordeev/13c6cac3c39702cdcb9cc169b66c3210/raw/runtime-badge.json)
+[![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/EvgeniGordeev/13c6cac3c39702cdcb9cc169b66c3210/raw/runtime-badge.json)](https://github.com/EvgeniGordeev/adventofcode/actions)
 
 
 [EvgeniGordeev/adventofcode](https://github.com/EvgeniGordeev/adventofcode)
