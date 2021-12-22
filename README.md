@@ -28,7 +28,7 @@ To profile with hyperfine - ```brew install hyperfine```
 | [08](https://adventofcode.com/2021/day/8)  | Seven Segment Search    | [py](2021/08.py)                          | 18 ms           |
 | [09](https://adventofcode.com/2021/day/9)  | Smoke Basin             | [py](2021/09.py)                          | 26 ms           |
 | [10](https://adventofcode.com/2021/day/10) | Syntax Scoring          | [py](2021/10.py)                          | 17 ms           |
-| [11](https://adventofcode.com/2021/day/11) |                         |                                           |                 |
+| [11](https://adventofcode.com/2021/day/11) | Dumbo Octopus           | [py](2021/11.py)                          | 39 ms           |
 | [12](https://adventofcode.com/2021/day/12) |                         |                                           |                 |
 | [13](https://adventofcode.com/2021/day/13) |                         |                                           |                 |
 | [14](https://adventofcode.com/2021/day/14) |                         |                                           |                 |
@@ -39,7 +39,7 @@ To profile with hyperfine - ```brew install hyperfine```
 | [19](https://adventofcode.com/2021/day/19) |                         |                                           |                 |
 | [20](https://adventofcode.com/2021/day/20) | Trench Map              | [py](2021/20.py)                          | 199 ms**        |
 | ---                                        | ---                     | ---                                       | ---             |
-| [all](https://adventofcode.com/2021)       | AoC 21                  | [py](2021/all.py) [txt](2021/answers.txt) | 527 ms (447 ms) |
+| [all](https://adventofcode.com/2021)       | AoC 21                  | [py](2021/all.py) [txt](2021/answers.txt) | 555 ms (447 ms) |
 
 * or ** - external solution adopted
 

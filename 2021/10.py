@@ -102,7 +102,7 @@ if __name__ == '__main__':
     # TWO #2
     part_2 = part2(incomplete)
     print(part_2)
-    # assert part_2 == 1122700
+    assert part_2 == 2429644557
 
 # INPUT
 """🎅
