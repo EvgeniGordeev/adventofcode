@@ -1,11 +1,12 @@
-name: AoC solutions
+name: AoC
+
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   testbox:
@@ -15,7 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
-        run: apk add hyperfine
+        run: |
+          pip install -r requirements.txt
+          apk add hyperfine
       - name: Run all and compare
         run: |
           cp 2021/answers.txt answers.tmp.txt
