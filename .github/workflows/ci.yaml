@@ -12,14 +12,9 @@ jobs:
   testbox:
     runs-on: ubuntu-latest
     container:
-      image: python:3.10-buster
+      image: egordeev/adventofcode:python-3.10-hyperfine
     steps:
       - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          pip install --no-cache-dir -r requirements.txt
-          curl https://sh.rustup.rs -sSfy | sh
-          cargo install hyperfine
       - name: Run all and compare
         run: |
           cp 2021/answers.txt answers.tmp.txt
