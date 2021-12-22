@@ -1,4 +1,4 @@
-Benchmark 1: python 2021/11.py
-  Time (mean ± σ):      37.9 ms ±   0.5 ms    [User: 34.1 ms, System: 2.9 ms]
-  Range (min … max):    36.9 ms …  38.5 ms    10 runs
+Benchmark 1: python 2021/all.py
+  Time (mean ± σ):     584.2 ms ±  52.5 ms    [User: 768.2 ms, System: 882.6 ms]
+  Range (min … max):   545.2 ms … 720.3 ms    10 runs
  
