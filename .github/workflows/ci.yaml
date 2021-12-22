@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --no-cache-dir -r requirements.txt
-          curl https://sh.rustup.rs -sSf | sh
+          curl https://sh.rustup.rs -sSfy | sh
           cargo install hyperfine
       - name: Run all and compare
         run: |
