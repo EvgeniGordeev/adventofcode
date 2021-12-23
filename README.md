@@ -7,15 +7,15 @@
 
 ## 2021
 
-![](https://img.shields.io/badge/stars%20⭐-20-yellow)
-![](https://img.shields.io/badge/day%20📅-21-blue)
-![](https://img.shields.io/badge/days%20completed-10-red)
+![](https://img.shields.io/badge/stars%20⭐-26-yellow)
+![](https://img.shields.io/badge/day%20📅-22-blue)
+![](https://img.shields.io/badge/days%20completed-13-red)
 
 https://adventofcode.com/2021
 
 To profile with hyperfine - ```brew install hyperfine```
 
-* ```hyperfine -r 10 'python 2021/01.py'```
+* ```hyperfine -r 10 '2021/01.py'```
 * ```python -m cProfile 2021/01.py```
 * ```time python 2021/01.py```
 
@@ -32,7 +32,7 @@ To profile with hyperfine - ```brew install hyperfine```
 | [09](https://adventofcode.com/2021/day/9)  | Smoke Basin             | [py](2021/09.py)                          | 26 ms                                                                                                                                                                                                                                  |
 | [10](https://adventofcode.com/2021/day/10) | Syntax Scoring          | [py](2021/10.py)                          | 17 ms                                                                                                                                                                                                                                  |
 | [11](https://adventofcode.com/2021/day/11) | Dumbo Octopus           | [py](2021/11.py)                          | 39 ms                                                                                                                                                                                                                                  |
-| [12](https://adventofcode.com/2021/day/12) |                         |                                           |                                                                                                                                                                                                                                        |
+| [12](https://adventofcode.com/2021/day/12) | Passage Pathing         | [py](2021/12.py)                          | 395 ms                                                                                                                                                                                                                                 |
 | [13](https://adventofcode.com/2021/day/13) |                         |                                           |                                                                                                                                                                                                                                        |
 | [14](https://adventofcode.com/2021/day/14) |                         |                                           |                                                                                                                                                                                                                                        |
 | [15](https://adventofcode.com/2021/day/15) |                         |                                           |                                                                                                                                                                                                                                        |
@@ -42,7 +42,7 @@ To profile with hyperfine - ```brew install hyperfine```
 | [19](https://adventofcode.com/2021/day/19) |                         |                                           |                                                                                                                                                                                                                                        |
 | [20](https://adventofcode.com/2021/day/20) | Trench Map              | [py](2021/20.py)                          | 199 ms**                                                                                                                                                                                                                               |
 | ---                                        | ---                     | ---                                       | ---                                                                                                                                                                                                                                    |
-| [all](https://adventofcode.com/2021)       | AoC 21                  | [py](2021/all.py) [txt](2021/answers.txt) | M1 - 537 ms, CI - [![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/EvgeniGordeev/13c6cac3c39702cdcb9cc169b66c3210/raw/runtime-badge-2021.json)](https://github.com/EvgeniGordeev/adventofcode/actions) |
+| [all](https://adventofcode.com/2021)       | AoC 21                  | [py](2021/all.py) [txt](2021/answers.txt) | M1 - 944 ms, CI - [![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/EvgeniGordeev/13c6cac3c39702cdcb9cc169b66c3210/raw/runtime-badge-2021.json)](https://github.com/EvgeniGordeev/adventofcode/actions) |
 
 * or ** - external solution adopted
 
