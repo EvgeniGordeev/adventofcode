@@ -54,7 +54,7 @@ def part1(lines) -> int:
             paths.add(path)
             return
         # small cave already visited
-        if leaf[0] in string.ascii_lowercase and ',' + leaf in path:
+        if leaf[0] in string.ascii_lowercase and leaf in path:
             return
         path += leaf + ','
         for child in root.children:
@@ -70,16 +70,15 @@ def part2(lines) -> int:
     def dfs(root: Node, path: str, paths: set, allow_double_visit=True):
         leaf = root.val
         if leaf == 'end':
-            path += 'end'
             paths.add(path)
             return
         # single small caves allow 2 visits, other small ones 1 visit
-        if leaf[0] in string.ascii_lowercase and ',' + leaf in path:
+        if leaf[0] in string.ascii_lowercase and leaf in path:
             if allow_double_visit:
                 allow_double_visit = False
             else:
                 return
-        path += leaf + ','
+        path += leaf
         for child in root.children:
             dfs(child, path, paths, allow_double_visit)
 
