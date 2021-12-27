@@ -1,0 +1,28 @@
+name: AoC-2020
+
+on: workflow_dispatch
+
+jobs:
+  _2020_:
+    runs-on: ubuntu-latest
+    container:
+      image: egordeev/adventofcode:python-3.10-hyperfine
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run all and compare
+        run: |
+          cp 2020/answers.txt answers.tmp.txt
+          hyperfine --warmup 3 -r 10 'python 2020/all.py' | tee 2020/benchmark.txt
+          echo "=== All Solutions ==="
+          cat 2020/answers.txt
+          cmp -s 2020/answers.txt answers.tmp.txt || exit 1
+          echo "RUNTIME_BADGE=$(sed -n 's|Time.*\:\(.*±\).*\[.*|\1|p' benchmark.txt | xargs)" >> $GITHUB_ENV
+      - name: Create Awesome Badge
+        uses: schneegans/dynamic-badges-action@v1.1.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 13c6cac3c39702cdcb9cc169b66c3210
+          filename: runtime-badge-2020.json
+          label: Runtime
+          message: ${{ env.RUNTIME_BADGE }}
+          color: blue
