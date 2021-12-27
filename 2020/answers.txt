@@ -1,0 +1,69 @@
+===Running 01.py===
+138379
+85491920
+===Running 02.py===
+603
+404
+===Running 03.py===
+250
+1592662500
+===Running 04.py===
+182
+109
+===Running 05.py===
+858
+557
+===Running 06.py===
+6930
+3585
+===Running 07.py===
+254
+6006
+===Running 08.py===
+1217
+501
+===Running 09.py===
+217430975
+28509180
+===Running 10.py===
+2475
+442136281481216
+===Running 11.py===
+2211
+1995
+===Running 12.py===
+757
+51249
+===Running 13.py===
+136
+305068317272992
+===Running 14.py===
+15919415426101
+3443997590975
+===Running 15.py===
+234
+8984
+===Running 16.py===
+28884
+1001849322119
+===Running 17.py===
+232
+1620
+===Running 18.py===
+464478013511
+85660197232452
+===Running 19.py===
+226
+355
+===Running 21.py===
+2072
+fdsfpg,jmvxx,lkv,cbzcgvc,kfgln,pqqks,pqrvc,lclnj
+===Running 22.py===
+32401
+31436
+===Running 23.py===
+74698532
+286194102744
+===Running 24.py===
+320
+3777
