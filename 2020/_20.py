@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+import os
 import re
 # HELPER FUNCTIONS
 from itertools import starmap
+
 from math import isqrt
 
 
@@ -33,7 +35,8 @@ class Tile(object):
 
 
 def read_txt(path: str) -> str:
-    with open(path, 'r') as file:
+    dir_ = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(dir_, path), 'r') as file:
         data = file.read()
         return data
 

@@ -1,0 +1,46 @@
+## 2021
+
+![](https://img.shields.io/badge/stars%20⭐-30-yellow)
+![](https://img.shields.io/badge/days%20completed-15-red)
+![](https://img.shields.io/badge/day%20📅-25-blue)
+[![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/EvgeniGordeev/13c6cac3c39702cdcb9cc169b66c3210/raw/runtime-badge-2021.json)](https://github.com/EvgeniGordeev/adventofcode/actions)
+
+* https://adventofcode.com/2021
+
+To profile with hyperfine - ```brew install hyperfine```
+
+* ```hyperfine -r 10 '2021/01.py'```
+* ```python -m cProfile 2021/01.py```
+* ```time python 2021/01.py```
+
+| Day                                        | Name                     | Solution                                  | Stats (ms)                                                                                                                                                                                                                          |
+|--------------------------------------------|--------------------------|-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [01](https://adventofcode.com/2021/day/1)  | Sonar Sweep              | [py](2021/01.py)                          | 19                                                                                                                                                                                                                                  |
+| [02](https://adventofcode.com/2021/day/2)  | Dive                     | [py](2021/02.py)                          | 20                                                                                                                                                                                                                                  |
+| [03](https://adventofcode.com/2021/day/3)  | Binary Diagnostic        | [py](2021/03.py)                          | 19                                                                                                                                                                                                                                  |
+| [04](https://adventofcode.com/2021/day/4)  | Giant Squid              | [py](2021/04.py)                          | 42                                                                                                                                                                                                                                  |
+| [05](https://adventofcode.com/2021/day/5)  | Hydrothermal Venture     | [py](2021/05.py)                          | 620, 85*                                                                                                                                                                                                                            |
+| [06](https://adventofcode.com/2021/day/6)  | Lanternfish              | [py](2021/06.py)                          | 18                                                                                                                                                                                                                                  |
+| [07](https://adventofcode.com/2021/day/7)  | The Treachery of Whales  | [py](2021/07.py)                          | 21                                                                                                                                                                                                                                  |
+| [08](https://adventofcode.com/2021/day/8)  | Seven Segment Search     | [py](2021/08.py)                          | 18                                                                                                                                                                                                                                  |
+| [09](https://adventofcode.com/2021/day/9)  | Smoke Basin              | [py](2021/09.py)                          | 26                                                                                                                                                                                                                                  |
+| [10](https://adventofcode.com/2021/day/10) | Syntax Scoring           | [py](2021/10.py)                          | 17                                                                                                                                                                                                                                  |
+| [11](https://adventofcode.com/2021/day/11) | Dumbo Octopus            | [py](2021/11.py)                          | 39                                                                                                                                                                                                                                  |
+| [12](https://adventofcode.com/2021/day/12) | Passage Pathing          | [py](2021/12.py)                          | 337                                                                                                                                                                                                                                 |
+| [13](https://adventofcode.com/2021/day/13) | Transparent Origami      | [py](2021/13.py)                          | 18                                                                                                                                                                                                                                  |
+| [14](https://adventofcode.com/2021/day/14) | Extended Polymerization  | [py](2021/14.py)                          | 60                                                                                                                                                                                                                                  |
+| [15](https://adventofcode.com/2021/day/15) | Chiton                   | [py](2021/15.py)                          |                                                                                                                                                                                                                                     |
+| [16](https://adventofcode.com/2021/day/16) |                          |                                           |                                                                                                                                                                                                                                     |
+| [17](https://adventofcode.com/2021/day/17) |                          |                                           |                                                                                                                                                                                                                                     |
+| [18](https://adventofcode.com/2021/day/18) |                          |                                           |                                                                                                                                                                                                                                     |
+| [19](https://adventofcode.com/2021/day/19) |                          |                                           |                                                                                                                                                                                                                                     |
+| [20](https://adventofcode.com/2021/day/20) | Trench Map               | [py](2021/20.py)                          | 199**                                                                                                                                                                                                                               |
+| ---                                        | ------                   | ---------                                 | ---                                                                                                                                                                                                                                 |
+| [all](https://adventofcode.com/2021)       | AoC 21                   | [py](2021/all.py) [txt](2021/answers.txt) | M1 - 948, CI - [![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/EvgeniGordeev/13c6cac3c39702cdcb9cc169b66c3210/raw/runtime-badge-2021.json)](https://github.com/EvgeniGordeev/adventofcode/actions) |
+
+* or ** - external solution adopted
+
+## External
+
+* [https://github.com/hyper-neutrino/advent-of-code](https://github.com/hyper-neutrino/advent-of-code)
+* [https://github.com/sotsoguk/AdventOfCode2021](https://github.com/sotsoguk/AdventOfCode2021)
