@@ -16,7 +16,7 @@ jobs:
           echo "=== All Solutions ==="
           cat 2020/answers.txt
           cmp -s 2020/answers.txt answers.tmp.txt || exit 1
-          echo "RUNTIME_BADGE=$(sed -n 's|Time.*\:\(.*±\).*\[.*|\1|p' benchmark.txt | xargs)" >> $GITHUB_ENV
+          echo "RUNTIME_BADGE=$(sed -n 's|Time.*\:\(.*±\).*\[.*|\1|p' 2020/benchmark.txt | xargs)" >> $GITHUB_ENV
       - name: Create Awesome Badge
         uses: schneegans/dynamic-badges-action@v1.1.0
         with:
