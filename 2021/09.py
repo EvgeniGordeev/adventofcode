@@ -11,7 +11,7 @@ def parser(text) -> list:
 
 
 def read_input() -> str:
-    with open(__file__, "r") as f:
+    with open(__file__, encoding="utf-8") as f:
         c = f.read()
         data = c[c.rindex("🎅") + 1: c.rindex("⛄")].strip()
     return data

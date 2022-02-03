@@ -4,7 +4,7 @@ import string
 
 # HELPER FUNCTIONS
 def read_data():
-    with open(__file__, "r") as f:
+    with open(__file__, encoding="utf-8") as f:
         c = f.read()
         data = c[c.rindex("🎅") + 1: c.rindex("⛄")].rstrip()
     return data
