@@ -25,7 +25,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     dir_ = os.path.dirname(os.path.abspath(__file__))
     sols = sorted([f for f in os.listdir(dir_) if re.match(r'^\d+\.py$', f)])
-    answers = os.path.join(dir_, 'answers.txt') if args.write else tempfile.NamedTemporaryFile(encoding='utf-8').name
+    answers = os.path.join(dir_, 'answers.txt') if args.write else tempfile.NamedTemporaryFile().name
     with open(answers, 'w', encoding='utf-8') as out:
         for s in sols:
             mes = f"===Running {s}==="
