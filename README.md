@@ -8,7 +8,7 @@
 ## solutions
 
 ```bash
-hyperfine --warmup 3 -r 10 '<year>/all.py' | tee <year>/benchmark.txt
+hyperfine --warmup 3 -r 10 '2021/all.py'
 ```
 
 | Year                                                           | Stars                                                  | Solutions            | M1 Stats | CI Stats                                                                                                                                                                                                             |
