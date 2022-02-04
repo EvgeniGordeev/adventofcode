@@ -18,7 +18,7 @@ jobs:
       - name: Run all and compare
         run: |
           cp 2021/answers.txt answers.tmp.txt
-          hyperfine --warmup 3 -r 10 'python 2021/all.py' | tee 2021/benchmark.txt
+          hyperfine --warmup 3 -r 10 'python 2021/all.py --write' | tee 2021/benchmark.txt
           echo "=== All Solutions ==="
           cat 2021/answers.txt
           cmp -s 2021/answers.txt answers.tmp.txt || exit 1

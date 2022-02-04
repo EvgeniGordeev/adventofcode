@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-
-
+import argparse
 import os
 import re
 import subprocess
 import sys
+import tempfile
 
 
 def call_out(command: str, **kwargs):
@@ -20,9 +20,13 @@ def call_out(command: str, **kwargs):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--write', action=argparse.BooleanOptionalAction, help='write results to answers.txt')
+    args = parser.parse_args()
     dir_ = os.path.dirname(os.path.abspath(__file__))
     sols = sorted([f for f in os.listdir(dir_) if re.match(r'^\d+\.py$', f)])
-    with open(os.path.join(dir_, 'answers.txt'), 'w') as out:
+    with open(os.path.join(dir_, 'answers.txt') if args.write else tempfile.NamedTemporaryFile().name, 'w',
+              encoding='utf-8') as out:
         for s in sols:
             mes = f"===Running {s}==="
             print(mes)
