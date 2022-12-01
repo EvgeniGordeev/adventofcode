@@ -8,7 +8,7 @@ jobs:
     container:
       image: egordeev/adventofcode:python-3.10-hyperfine
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Run all and compare
         run: |
           cp 2020/answers.txt answers.tmp.txt
@@ -18,7 +18,7 @@ jobs:
           cmp -s 2020/answers.txt answers.tmp.txt || exit 1
           echo "RUNTIME_BADGE=$(sed -n 's|Time.*\:\(.*±\).*\[.*|\1|p' 2020/benchmark.txt | xargs)" >> $GITHUB_ENV
       - name: Create Awesome Badge
-        uses: schneegans/dynamic-badges-action@v1.1.0
+        uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 13c6cac3c39702cdcb9cc169b66c3210
