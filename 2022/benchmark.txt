@@ -1,0 +1,4 @@
+Benchmark 1: python 2022/all.py --write
+  Time (mean ± σ):     101.3 ms ±   2.9 ms    [User: 34.8 ms, System: 24.0 ms]
+  Range (min … max):    94.7 ms … 105.0 ms    10 runs
+ 

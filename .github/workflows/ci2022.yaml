@@ -1,0 +1,34 @@
+name: AoC-2022
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  _2022_:
+    runs-on: ubuntu-latest
+    container:
+      image: egordeev/adventofcode:python-3.11-hyperfine
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run all and compare
+        run: |
+          cp 2022/answers.txt answers.tmp.txt
+          hyperfine --warmup 3 -r 10 'python 2022/all.py --write' | tee 2022/benchmark.txt
+          echo "=== All Solutions ==="
+          cat 2022/answers.txt
+          cmp -s 2022/answers.txt answers.tmp.txt || exit 1
+          echo "RUNTIME_BADGE=$(sed -n 's|Time.*\:\(.*±\).*\[.*|\1|p' 2022/benchmark.txt | xargs)" >> $GITHUB_ENV
+      - name: Create Awesome Badge
+        uses: schneegans/dynamic-badges-action@v1.1.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 13c6cac3c39702cdcb9cc169b66c3210
+          filename: runtime-badge-2021.json
+          label: Runtime
+          message: ${{ env.RUNTIME_BADGE }}
+          color: blue
