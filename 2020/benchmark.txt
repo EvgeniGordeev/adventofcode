@@ -1,4 +1,1 @@
-Benchmark 1: 2020/all.py
-  Time (mean ± σ):     33.862 s ±  0.388 s    [User: 33.310 s, System: 0.426 s]
-  Range (min … max):   33.520 s … 34.621 s    10 runs
- 
+Benchmark 1: find 2020 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -L 1 python 

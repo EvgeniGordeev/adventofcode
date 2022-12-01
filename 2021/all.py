@@ -26,11 +26,13 @@ if __name__ == '__main__':
     dir_ = os.path.dirname(os.path.abspath(__file__))
     sols = sorted([f for f in os.listdir(dir_) if re.match(r'^\d+\.py$', f)])
     answers = os.path.join(dir_, 'answers.txt') if args.write else tempfile.NamedTemporaryFile().name
+    folder_name = dir_.split('/')[-1]
     with open(answers, 'w', encoding='utf-8') as out:
         for s in sols:
-            mes = f"===Running {s}==="
+            mes = f"{folder_name}/{s}"
             print(mes)
             out.write(mes + "\n")
             mes = call_out(f"python {os.path.join(dir_, s)}")
+            mes = "  " + mes.replace('\n', '\n  ')
             print(mes)
             out.write(mes + '\n')

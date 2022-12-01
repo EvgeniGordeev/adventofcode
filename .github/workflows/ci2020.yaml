@@ -12,11 +12,16 @@ jobs:
       - name: Run all and compare
         run: |
           cp 2020/answers.txt answers.tmp.txt
-          hyperfine --warmup 3 -r 10 'python 2020/all.py' | tee 2020/benchmark.txt
+          python 2020/all.py --write
           echo "=== All Solutions ==="
           cat 2020/answers.txt
           cmp -s 2020/answers.txt answers.tmp.txt || exit 1
+      - name: Benchmark
+        run: |
+          hyperfine --warmup 3 -r 10 'find 2020 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -L 1 python ' | tee 2020/benchmark.txt
           echo "RUNTIME_BADGE=$(sed -n 's|Time.*\:\(.*±\).*\[.*|\1|p' 2020/benchmark.txt | xargs)" >> $GITHUB_ENV
+          echo "=== All Benchmarks ==="
+          find 2020 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -L 1 hyperfine --warmup 3 -r 10
       - name: Create Awesome Badge
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
