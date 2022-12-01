@@ -28,7 +28,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 13c6cac3c39702cdcb9cc169b66c3210
-          filename: runtime-badge-2021.json
+          filename: runtime-badge-2022.json
           label: Runtime
           message: ${{ env.RUNTIME_BADGE }}
           color: blue
