@@ -19,8 +19,6 @@ jobs:
         run: |
           cp 2022/answers.txt answers.tmp.txt
           python 2022/all.py --write
-          echo "=== All Solutions ==="
-          cat 2022/answers.txt
           cmp -s 2022/answers.txt answers.tmp.txt || exit 1
       - name: Benchmark
         run: |
