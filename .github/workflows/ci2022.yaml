@@ -22,10 +22,9 @@ jobs:
           cmp -s 2022/answers.txt answers.tmp.txt || exit 1
       - name: Benchmarking
         run: |
-          hyperfine --warmup 3 -r 10 'find 2022 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -L 1 python ' | tee 2022/benchmark.txt
+          hyperfine --warmup 3 -r 10 'find 2022 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs python ' | tee 2022/benchmark.txt
           echo "=== All Benchmarks ==="
-          echo 'find 2022 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -I % -L 1 bash -c "hyperfine --warmup 3 -r 10 % | tee %.benchmark.txt"'
-          find 2022 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -I % -L 1 bash -c "hyperfine --warmup 3 -r 10 % | tee %.benchmark.txt"
+          find 2022 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -I {} bash -c "hyperfine --warmup 3 -r 10 {} | tee {}.benchmark.txt"
       - name: Create Awesome Badges
         run: |
           bin/create-awesome-badges.py --dir 2022 --gist 13c6cac3c39702cdcb9cc169b66c3210 --secret ${{ secrets.GIST_GITHUB_SECRET }}
