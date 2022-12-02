@@ -18,7 +18,7 @@ jobs:
       - name: Run all and verify output
         run: |
           cp 2015/answers.txt answers.tmp.txt
-          python 2015/all.py --write
+          bin/run-all-solutions.py --dir 2015 --write
           cmp -s 2015/answers.txt answers.tmp.txt || exit 1
       - name: Benchmark
         run: |

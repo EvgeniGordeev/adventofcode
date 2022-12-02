@@ -20,19 +20,24 @@ def call_out(command: str, **kwargs):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--write', action=argparse.BooleanOptionalAction, help='write results to answers.txt')
+    parser = argparse.ArgumentParser(description='Execute all py files in a folder and [write answers to a file]')
+    parser.add_argument('--dir', default='../2022', help='folder with py files to run')
+    parser.add_argument('--write', action='store_true', help='write results to answers.txt')
     args = parser.parse_args()
-    dir_ = os.path.dirname(os.path.abspath(__file__))
-    sols = sorted([f for f in os.listdir(dir_) if re.match(r'^\d+\.py$', f)])
-    answers = os.path.join(dir_, 'answers.txt') if args.write else tempfile.NamedTemporaryFile().name
-    folder_name = dir_.split('/')[-1]
+
+    folder = os.path.join(os.getcwd(), args.dir)
+    if not os.path.isdir(folder):
+        sys.exit(f" --dir requires an existing folder. {folder} is not a directory. ")
+
+    sols = sorted([f for f in os.listdir(folder) if re.match(r'^\d+\.py$', f)])
+    answers = os.path.join(folder, 'answers.txt') if args.write else tempfile.NamedTemporaryFile().name
+    folder_name = folder.split('/')[-1]
     with open(answers, 'w', encoding='utf-8') as out:
         for s in sols:
             mes = f"{folder_name}/{s}"
             print(mes)
             out.write(mes + "\n")
-            mes = call_out(f"python {os.path.join(dir_, s)}")
+            mes = call_out(f"python {os.path.join(folder, s)}")
             mes = "  " + mes.replace('\n', '\n  ')
             print(mes)
             out.write(mes + '\n')

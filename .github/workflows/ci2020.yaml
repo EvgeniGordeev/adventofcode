@@ -12,7 +12,7 @@ jobs:
       - name: Run all and compare
         run: |
           cp 2020/answers.txt answers.tmp.txt
-          python 2020/all.py --write
+          bin/run-all-solutions.py --dir 2015 --write
           cmp -s 2020/answers.txt answers.tmp.txt || exit 1
       - name: Benchmark
         run: |
