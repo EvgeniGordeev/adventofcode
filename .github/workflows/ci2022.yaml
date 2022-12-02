@@ -25,8 +25,7 @@ jobs:
           hyperfine --warmup 3 -r 10 'find 2022 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -L 1 python ' | tee 2022/benchmark.txt
           echo "RUNTIME_BADGE_ALL=$(sed -n 's|Time.*\:\(.*±\).*\[.*|\1|p' 2022/benchmark.txt | xargs)" >> $GITHUB_ENV
           echo "=== All Benchmarks ==="
-          echo "this is a basic xargs example" | xargs -I {} echo "you said: {}"
-          find 2022 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -I {} -L 1 bash -c 'hyperfine --warmup 3 -r 10 {} | tee {}.benchmark.txt'
+          find 2022 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -I % -L 1 bash -c 'hyperfine --warmup 3 -r 10 % | tee %.benchmark.txt'
       - name: Create Awesome Badges
         run: |
           bin/create-awesome-badges.py --dir 2022 --gist 13c6cac3c39702cdcb9cc169b66c3210 --secret ${{ secrets.GIST_GITHUB_SECRET }}
