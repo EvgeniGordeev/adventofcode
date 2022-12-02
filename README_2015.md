@@ -1,7 +1,7 @@
 ## 2015
 
-![](https://img.shields.io/badge/stars%20⭐-2-yellow)
-![](https://img.shields.io/badge/days%20completed-1-red)
+![](https://img.shields.io/badge/stars%20⭐-4-yellow)
+![](https://img.shields.io/badge/days%20completed-2-red)
 ![](https://img.shields.io/badge/day%20📅-25-blue)
 [![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/EvgeniGordeev/13c6cac3c39702cdcb9cc169b66c3210/raw/runtime-badge-2015.json)](https://github.com/EvgeniGordeev/adventofcode/actions)
 
