@@ -1,0 +1,31 @@
+name: AoC-2021
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+
+  _2021_:
+    runs-on: ubuntu-latest
+    container:
+      image: egordeev/adventofcode:python-3.11-hyperfine
+    env:
+      YEAR: 2021
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run all and verify output
+        run: |
+          cp $YEAR/answers.txt answers.tmp.txt
+          bin/run-all-solutions.py --dir $YEAR --write
+          cmp -s $YEAR/answers.txt answers.tmp.txt || exit 1
+      - name: Benchmarking
+        run: |
+          hyperfine --warmup 3 -r 10 'find $YEAR -type f -regex ".*/[0-9]*\.py" | sort -n | xargs python ' | tee $YEAR/benchmark.txt
+          echo "=== All Benchmarks ==="
+          find $YEAR -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -I {} bash -c "hyperfine --warmup 3 -r 10 {} | tee {}.benchmark.txt"
+      - name: Create Awesome Badges
+        run: |
+          bin/create-awesome-badges.py --dir $YEAR --gist 13c6cac3c39702cdcb9cc169b66c3210 --secret ${{ secrets.GIST_GITHUB_SECRET }}

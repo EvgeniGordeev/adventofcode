@@ -3,6 +3,7 @@
 [![example workflow](https://github.com/EvgeniGordeev/adventofcode/actions/workflows/ci2022.yaml/badge.svg)](https://github.com/EvgeniGordeev/adventofcode/actions)
 [![example workflow](https://github.com/EvgeniGordeev/adventofcode/actions/workflows/ci2021.yaml/badge.svg)](https://github.com/EvgeniGordeev/adventofcode/actions)
 [![example workflow](https://github.com/EvgeniGordeev/adventofcode/actions/workflows/ci2020.yaml/badge.svg)](https://github.com/EvgeniGordeev/adventofcode/actions)
+[![example workflow](https://github.com/EvgeniGordeev/adventofcode/actions/workflows/ci2015.yaml/badge.svg)](https://github.com/EvgeniGordeev/adventofcode/actions)
 
 [EvgeniGordeev/adventofcode](https://github.com/EvgeniGordeev/adventofcode)
 [Benchmark](https://github.com/sharkdp/hyperfine)
