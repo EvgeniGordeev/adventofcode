@@ -34,19 +34,22 @@ def part2(given: str) -> int:
     houses_grid = set()
     santa, robo_santa = [0, 0], [0, 0]
     houses_grid.add(tuple(santa))  # He begins by delivering a present to the house at his starting location
-    santa_turn = True
+
+    switch = True
     for direction in given:
-        executor = santa if santa_turn else robo_santa
+        gift_carrier = santa if switch else robo_santa
+
         if direction == '>':
-            executor[0] += 1
+            gift_carrier[0] += 1
         elif direction == '<':
-            executor[0] -= 1
+            gift_carrier[0] -= 1
         elif direction == '^':
-            executor[1] += 1
+            gift_carrier[1] += 1
         elif direction == 'v':
-            executor[1] -= 1
-        houses_grid.add(tuple(executor))
-        santa_turn = not santa_turn
+            gift_carrier[1] -= 1
+
+        houses_grid.add(tuple(gift_carrier))
+        switch = not switch
     return len(houses_grid)
 
 
