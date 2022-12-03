@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-aocdl --force
+aocdl -force $@
 pbcopy <input.txt
