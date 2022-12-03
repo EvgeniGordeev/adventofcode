@@ -20,7 +20,7 @@ jobs:
           cmp -s $YEAR/answers.txt answers.tmp.txt || exit 1
       - name: Benchmarking
         run: |
-          hyperfine --warmup 3 -r 10 'find $YEAR -type f -regex ".*/[0-9]*\.py" | sort -n | xargs python ' | tee $YEAR/benchmark.txt
+          hyperfine --warmup 3 -r 10 "find $YEAR -type f -regex '.*/[0-9]*\.py' | sort -n | xargs -I {} python {}" | tee $YEAR/benchmark.txt
           echo "=== All Benchmarks ==="
           find $YEAR -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -I {} bash -c "hyperfine --warmup 3 -r 10 {} | tee {}.benchmark.txt"
       - name: Create Awesome Badges
