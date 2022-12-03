@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from collections import namedtuple
 from typing import List
 
 
@@ -14,78 +15,66 @@ def read_input() -> str:
 
 
 # MAIN FUNCTIONS
-# rock     in ('A','X')
-# paper    in ('B','Y')
-# scissors in ('C','Z')
-def rock(shape: str) -> int:
-    outcome = 0  # loss
+Shape = namedtuple('Shape', 'label score')
 
-    if shape == 'A':  # draw
-        outcome = 3
-    elif shape == 'C':  # win
-        outcome = 6
-    return 1 + outcome
+Rock = Shape('Rock', 1)
+Paper = Shape('Paper', 2)
+Scissors = Shape('Scissors', 3)
 
-
-def paper(shape: str) -> int:
-    outcome = 0  # loss
-
-    if shape == 'B':  # draw
-        outcome = 3
-    elif shape == 'A':  # win
-        outcome = 6
-    return 2 + outcome
-
-
-def scissors(shape: str) -> int:
-    outcome = 0  # loss
-
-    if shape == 'C':  # draw
-        outcome = 3
-    elif shape == 'B':  # win
-        outcome = 6
-    return 3 + outcome
-
-
-game = {
-    "X": rock,
-    "Y": paper,
-    "Z": scissors,
+aka = {
+    'A': Rock,
+    'X': Rock,
+    'Rock': Rock,
+    'B': Paper,
+    'Y': Paper,
+    'Paper': Paper,
+    'C': Scissors,
+    'Z': Scissors,
+    'Scissors': Scissors,
 }
 
-R, P, S = 'A', 'B', 'C'
-
-reverse_game = {
-    "A": {
-        "X": lambda: scissors(R),
-        "Y": lambda: rock(R),
-        "Z": lambda: paper(R)
-    },
-    "B": {
-        "X": lambda: rock(P),
-        "Y": lambda: paper(P),
-        "Z": lambda: scissors(P)
-    },
-    "C": {
-        "X": lambda: paper(S),
-        "Y": lambda: scissors(S),
-        "Z": lambda: rock(S)
-    },
+win_rules = {
+    'Rock': 'Scissors',
+    'Paper': 'Rock',
+    'Scissors': 'Paper',
 }
 
 
 def part1(given: List[str]) -> int:
+    def play(sh1: Shape, sh2: Shape) -> int:
+        if win_rules[sh2.label] == sh1.label:  # win
+            outcome = 6
+        elif sh2.score == sh1.score:  # draw
+            outcome = 3
+        elif win_rules[sh1.label] == sh2.label:  # loss
+            outcome = 0
+        else:
+            raise ValueError
+        return outcome + sh2.score
+
     count = 0
     for opponent, me in given:
-        count += game[me](opponent)
+        count += play(aka[opponent], aka[me])
 
     return count
 
 
 def part2(given: List[str]) -> int:
+    loss_rules = {v: k for k, v in win_rules.items()}
+
+    def play_reverse(sh1: Shape, outcome: str) -> int:
+        if outcome == 'X':  # loss
+            return aka[win_rules[sh1.label]].score
+        elif outcome == 'Y':  # draw
+            return 3 + sh1.score
+        elif outcome == 'Z':  # win
+            return 6 + aka[loss_rules[sh1.label]].score
+        else:
+            raise ValueError
+
     count = 0
     for opponent, me in given:
-        count += reverse_game[opponent][me]()
+        count += play_reverse(aka[opponent], me)
 
     return count
 
