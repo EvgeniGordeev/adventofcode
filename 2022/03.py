@@ -17,9 +17,10 @@ def read_input() -> str:
 # MAIN FUNCTIONS
 def part1(given: List[str]) -> int:
     count = 0
-    for comp in given:
-        first, second = comp[:len(comp) // 2], comp[len(comp) // 2:]
-        common = next(iter(set(first).intersection(set(second))))
+    for rucksack in given:
+        middle = len(rucksack) // 2
+        first, second = rucksack[:middle], rucksack[middle:]
+        common = next(iter(set(first).intersection(second)))
         count += string.ascii_letters.index(common) + 1
 
     return count
