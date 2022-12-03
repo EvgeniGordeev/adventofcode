@@ -28,4 +28,4 @@ jobs:
           find $YEAR -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -I {} bash -c "hyperfine --warmup 3 -r 10 {} | tee {}.benchmark.txt"
       - name: Create Awesome Badges
         run: |
-          bin/create-awesome-badges.py --dir $YEAR
+          bin/create-awesome-badges.py --dir $YEAR --gist 13c6cac3c39702cdcb9cc169b66c3210 --secret ${{ secrets.GIST_GITHUB_SECRET }}
