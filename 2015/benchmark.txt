@@ -1,4 +1,4 @@
-Benchmark 1: find 2015 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -L 1 python 
-  Time (mean ± σ):      66.6 ms ±   2.7 ms    [User: 27.3 ms, System: 18.3 ms]
-  Range (min … max):    63.5 ms …  71.3 ms    10 runs
+Benchmark 1: find 2015 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs python 
+  Time (mean ± σ):      31.5 ms ±   1.4 ms    [User: 12.6 ms, System: 10.1 ms]
+  Range (min … max):    29.8 ms …  33.3 ms    10 runs
  
