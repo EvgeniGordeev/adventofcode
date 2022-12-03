@@ -13,11 +13,3 @@ RUN HYPERFINE_VERSION=$(curl -s "https://api.github.com/repos/sharkdp/hyperfine/
     && rm -rf hyperfine.deb
 
 RUN hyperfine --version
-
-#RUN apt-get -y update && \
-#    apt-get -y install build-essential curl git python-setuptools ruby && \
-#    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
-
-
-#ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
-#RUN brew install hyperfine
