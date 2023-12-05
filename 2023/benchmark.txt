@@ -1,0 +1,4 @@
+Benchmark 1: find 2023 -type f -regex '.*/[0-9]*\.py' | sort -n | xargs -I {} python {}
+  Time (mean ± σ):      22.1 ms ±   0.4 ms    [User: 17.1 ms, System: 5.8 ms]
+  Range (min … max):    21.8 ms …  23.1 ms    10 runs
+ 

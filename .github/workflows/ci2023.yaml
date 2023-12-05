@@ -1,16 +1,19 @@
 name: AoC-2022
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
 
-  _2022_:
+  _2023_:
     runs-on: ubuntu-latest
     container:
-      image: egordeev/adventofcode:python-3.11-hyperfine
+      image: egordeev/adventofcode:python-3.12-hyperfine
     env:
-      YEAR: 2022
+      YEAR: 2023
     steps:
       - uses: actions/checkout@v3
       - name: Run all and verify output
