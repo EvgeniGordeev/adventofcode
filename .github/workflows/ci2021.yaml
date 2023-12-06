@@ -1,6 +1,15 @@
 name: AoC-2021
 
+env:
+  YEAR: 2021
+
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "2021/**"
+      - "$YEAR/**" # variables inside paths don't work
   workflow_dispatch:
 
 jobs:
@@ -9,8 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: egordeev/adventofcode:python-3.11-hyperfine
-    env:
-      YEAR: 2021
     steps:
       - uses: actions/checkout@v3
       - name: Run all and verify output
