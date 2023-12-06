@@ -9,6 +9,7 @@ on:
       - main
     paths:
       - $YEAR
+  workflow_dispatch:
 
 jobs:
 
