@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import datetime
 import json
 import os
 import re
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     parser.add_argument('--gist', help='Github Gist id', default='13c6cac3c39702cdcb9cc169b66c3210')
     parser.add_argument('--secret', help='Github Secret with Gist permission or GIST_GITHUB_SECRET',
                         default=os.environ.get('GIST_GITHUB_SECRET'))
-    parser.add_argument('--dir', default='../2022', help='folder with py files to run')
+    parser.add_argument('--dir', default=f"../{datetime.date.today().year}", help='folder with py files to run')
     parser.add_argument('--dry-run', action='store_true', help='dry run')
     args = parser.parse_args()
 
