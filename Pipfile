@@ -7,8 +7,8 @@ verify_ssl = true
 requests = "2.31.0"
 
 [packages]
-#numpy = "1.26.2"
-#scipy = "1.11.4"
+numpy = "1.26.2"
+scipy = "1.11.4"
 
 [requires]
 python_version = "3.12"
