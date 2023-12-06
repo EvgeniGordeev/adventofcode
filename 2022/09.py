@@ -30,7 +30,7 @@ def parse_move(direction: str) -> tuple[int, int]:
 
 
 def motion_coords(p1, p2) -> tuple:
-    return p1[0] - p2[0], p1[1] - p2[1]
+    return (p1[0] - p2[0], p1[1] - p2[1])
 
 
 # a simpler equivalent for math.dist
