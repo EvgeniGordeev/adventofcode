@@ -8,7 +8,8 @@ on:
     branches:
       - main
     paths:
-      - "$YEAR/**"
+      - "2022/**"
+      - "$YEAR/**" # variables inside paths don't work
   workflow_dispatch:
 
 jobs:
