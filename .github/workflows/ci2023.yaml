@@ -1,10 +1,14 @@
 name: AoC-2023
 
+env:
+  YEAR: 2023
+
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
+    paths:
+      - $YEAR
 
 jobs:
 
@@ -12,8 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: egordeev/adventofcode:python-3.12-hyperfine
-    env:
-      YEAR: 2023
     steps:
       - uses: actions/checkout@v3
       - name: Run all and verify output
