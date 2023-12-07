@@ -1,0 +1,4 @@
+Benchmark 1: find 2022 -type f -regex ".*/[0-9]*\.py" | sort -n | xargs -L 1 python 
+  Time (mean ± σ):     210.8 ms ±   2.8 ms    [User: 168.8 ms, System: 36.7 ms]
+  Range (min … max):   207.5 ms … 215.3 ms    10 runs
+ 
