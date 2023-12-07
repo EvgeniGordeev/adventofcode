@@ -83,7 +83,7 @@ if __name__ == '__main__':
     assert test()
     lines = parser(read_input())
     # ONE #1
-    part_1 = part1_comp(lines)
+    part_1 = part1(lines)
     print(part_1)
     assert part_1 == 2348
     # # TWO #2
