@@ -27,7 +27,7 @@ def update_gist(gist_files: dict, secret, gist_id):
     patched_gist = requests.patch(f"https://api.github.com/gists/{gist_id}", headers=headers, json=data)
     if patched_gist.status_code != 200:
         sys.exit(f"Gist not updated {gist.text}")
-    print(f"Uploaded {gist_files.keys()} to gist {gist_id}")
+    print(f"Uploaded {list(gist_files.keys())} to gist {gist_id}")
 
 
 if __name__ == '__main__':
@@ -44,18 +44,19 @@ if __name__ == '__main__':
     if not os.path.isdir(folder):
         sys.exit(f" --dir requires an existing folder. {folder} is not a directory. ")
 
-    benchmark_results = sorted([f for f in os.listdir(folder) if re.match(r'.*benchmark\.txt$', f)])
+    benchmark_results = sorted([f for f in os.listdir(folder) if re.match(r'.*benchmark-.*?\.txt$', f)])
     dir_name = folder.split('/')[-1]
 
     gist_files = dict()
     for benchmark in benchmark_results:
         with open(os.path.join(folder, benchmark), 'r', encoding='utf-8') as file_content:
             result = file_content.read()
-            suffix = re.findall(r'(\d*).*', benchmark)[0]
-            suffix = suffix if suffix else 'all'
+            task_num = re.findall(r'(\d*).*', benchmark)[0]
+            pc_type = re.findall(r'-(.*)\.txt', benchmark)[0]
+            task_num = task_num if task_num else 'all'
             timing = re.findall(r'Time.*:\s*(.+ ±)', result)[0]
             badge = {"schemaVersion": 1, "label": "Runtime", "message": timing, "color": "blue"}
-            gist_files[f"runtime-badge-{dir_name}-{suffix}.json"] = badge
+            gist_files[f"runtime-badge-{dir_name}-{task_num}-{pc_type}.json"] = badge
 
     if gist_files:
         update_gist(gist_files, args.secret, args.gist)
