@@ -1,10 +1,6 @@
-version: '3'
-
 services:
 
   ci:
-    platform: linux/amd64
-#    platform: linux/arm64
     build: .
     image: egordeev/adventofcode:python-3.12-hyperfine
     working_dir: /aoc
