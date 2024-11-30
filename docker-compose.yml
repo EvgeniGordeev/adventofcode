@@ -2,7 +2,7 @@ services:
 
   ci:
     build: .
-    image: egordeev/adventofcode:python-3.12-hyperfine
+    image: egordeev/adventofcode:python-3.13-hyperfine
     working_dir: /aoc
     volumes:
       - ./:/aoc
