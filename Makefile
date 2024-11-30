@@ -10,5 +10,5 @@ build-ci:
 	bin/build-ci-image.sh
 
 pip-req:
-	echo "# Built from Pipfile with 'pipenv requirements'" > requirements.txt
-	pipenv requirements >> requirements.txt
+	echo "# Built from Pipfile with 'pipenv requirements --dev'" > requirements.txt
+	pipenv requirements --dev >> requirements.txt

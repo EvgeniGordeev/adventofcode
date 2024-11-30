@@ -9,7 +9,7 @@
 
 ## ci
 
-[GitHub Actions](https://github.com/EvgeniGordeev/adventofcode) based
+[GitHub Actions](https://github.com/EvgeniGordeev/adventofcode/actions) based
 on [Docker image](https://hub.docker.com/r/egordeev/adventofcode) built with `make build-ci`.
 
 ## repo
