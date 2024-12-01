@@ -14,9 +14,11 @@ def read_input() -> str:
     return data
 
 
-# MAIN FUNCTIONS
-
+# MAIN
 def part1(data: List[str]) -> int:
+    """
+    find distance between 2 sorted lists
+    """
     return sum(abs(a - b)
                for a, b in zip(  # zip 2 lists into a list of tuples and find distance between each item in 2 lists
         *map(sorted, zip(*(  # unzip a list of tuples into 2 lists and sort them
@@ -25,6 +27,9 @@ def part1(data: List[str]) -> int:
 
 
 def part2(data: List[str]) -> int:
+    """
+    find similarity score based on how many times an item from left list appears in the right one
+    """
     loc1, loc2 = zip(*(tuple(map(int, item.split())) for item in data))
     counter = Counter(loc2)
     return sum(i * counter.get(i, 0) for i in loc1)
@@ -32,7 +37,6 @@ def part2(data: List[str]) -> int:
 
 # TEST
 def test():
-    # GIVEN
     given = parser("""
 3   4
 4   3
@@ -54,7 +58,7 @@ if __name__ == '__main__':
     part_1 = part1(lines)
     print(part_1)
     assert part_1 == 3_508_942
-    # # TWO #2
+    # TWO #2
     part_2 = part2(lines)
     print(part_2)
     assert part_2 == 26_593_248
