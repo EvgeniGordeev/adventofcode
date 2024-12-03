@@ -20,6 +20,23 @@ on [Docker image](https://hub.docker.com/r/egordeev/adventofcode) built with `ma
 
 [Benchmark](https://github.com/sharkdp/hyperfine)
 
+### profiling
+
+To profile with hyperfine - `brew install hyperfine`
+
+* `hyperfine --warmup 3 -r 10 '2024/01.py'`
+* `find 2024 -type f -regex ".*/[0-9]*\.py" -exec hyperfine --warmup 3 -r 10 'python {}' \;`
+* `time python 2024/01.py`
+* `python -m cProfile 2024/01.py`
+
+### profiling visualization
+
+To create a visualization of the profiling results (requires `brew install graphviz`):
+
+```shell
+export problem=2024/01 && python -m cProfile -o $problem.pstats $problem.py && gprof2dot -f pstats $problem.pstats | dot -Tpng -o $problem.png
+```
+
 ## solutions
 
 | Year                                                           | Stars                                                 | Solutions       | M1 2021 Benchmark                                                                                                                                                                                                                                 | CI Benchmark                                                                                                                                                                                                                                      |
