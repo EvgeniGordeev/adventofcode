@@ -10,6 +10,7 @@ scipy = "1.14.1"
 [dev-packages]
 # used in CI for bin/create-awesome-badges.py
 requests = "2.32.3"
+gprof2dot = "2024.06.06"
 
 [requires]
 python_version = "3.13"

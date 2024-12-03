@@ -1,7 +1,8 @@
-# Built from Pipfile with 'pipenv requirements'
+# Built from Pipfile with 'pipenv requirements --dev'
 -i https://pypi.org/simple
 certifi==2024.8.30; python_version >= '3.6'
 charset-normalizer==3.4.0; python_full_version >= '3.7.0'
+gprof2dot==2024.6.6; python_version >= '3.8'
 idna==3.10; python_version >= '3.6'
 requests==2.32.3; python_version >= '3.8'
 urllib3==2.2.3; python_version >= '3.8'
