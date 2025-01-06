@@ -59,10 +59,10 @@ def part2(given: List[str]) -> int:
             if (
                     char == 'A'  # start with A
                     and 0 < x < height - 1 and 0 < y < width - 1  # check for out of bounds, A must not be on the edge
+                    and get_x_chars(given, x, y) in ('MMSS', 'MSMS', 'SSMM', 'SMSM')  # check corners of the square with A in the middle, options are
                     # .M.M.      .M.S.      .S.S.      .S.M.
                     # ..A..  OR  ..A..  OR  ..A..  OR  ..A..
                     # .S.S.      .M.S.      .M.M.      .S.M.
-                    and get_x_chars(given, x, y) in ('MMSS', 'MSMS', 'SSMM', 'SMSM')
             ):
                 found.append((x, y))
     return len(found)
