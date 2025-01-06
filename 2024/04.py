@@ -14,37 +14,41 @@ def read_input() -> str:
 
 
 # MAIN
-def neighbors(x, y, h, w) -> List[Tuple[int, int]]:
-    return [(x + i, y + j) for i in (-1, 0, 1) for j in (-1, 0, 1)
-            if (i, j) != (0, 0) and -1 < x + i < h and -1 < y + j < w]
 
+def part1(letters: List[str]) -> int:
+    keyword = 'XMAS'
+    height, width = len(letters), len(letters[0])
 
-def part1(given: List[str]) -> int:
-    KEYWORD = 'XMAS'
+    def neighbors(x, y) -> List[Tuple[int, int]]:
+        return [(x + i, y + j) for i in (-1, 0, 1) for j in (-1, 0, 1)
+                if (i, j) != (0, 0) and -1 < x + i < height and -1 < y + j < width]
 
-    def bfs(letters: List[str], paths: List[List[Tuple[int, int]]]):
-        if not paths:
-            return []
-        identified = []
+    def bfs(paths: List[List[Tuple[int, int]]]):
+        # identified = []
+        counter = 0
         for p in paths:
             x, y = p[-1]
-            if letters[x][y] == KEYWORD[len(p) - 1]:
-                if len(p) == len(KEYWORD):
-                    identified.append(p)
+            if letters[x][y] == keyword[len(p) - 1]:
+                if len(p) == len(keyword):
+                    # identified.append(p)
+                    counter += 1
                 else:
-                    for nx, ny in neighbors(x, y, len(letters), len(letters[0])):
+                    for nx, ny in neighbors(x, y):
                         if len(p) < 2 or p[-2][0] - x == x - nx and p[-2][1] - y == y - ny:  # word must not break, i.e. have the same direction
-                            identified.extend(bfs(letters, [p + [(nx, ny)]]))
+                            # identified.extend(bfs([p + [(nx, ny)]]))
+                            counter += bfs([p + [(nx, ny)]])
 
-        return identified
+        # return identified
+        return counter
 
-    height, width = len(given), len(given[0])
-    found = []
+    # found = []
+    result = 0
     for x in range(height):
         for y in range(width):
-            f = bfs(given, [[(x, y)]])
-            found.extend(f)
-    return len(found)
+            # found.extend(bfs([[(x, y)]]))
+            result += bfs([[(x, y)]])
+    # return len(found)
+    return result
 
 
 def part2(given: List[str]) -> int:
@@ -52,7 +56,8 @@ def part2(given: List[str]) -> int:
         return ''.join(letters[i][j] for i, j in [(x - 1, y - 1), (x - 1, y + 1), (x + 1, y - 1), (x + 1, y + 1)])
 
     height, width = len(given), len(given[0])
-    found = []
+    # found = []
+    result = 0
     for x, line in enumerate(given):
         for y, char in enumerate(line):
             if (
@@ -63,16 +68,14 @@ def part2(given: List[str]) -> int:
                     # ..A..  OR  ..A..  OR  ..A..  OR  ..A..
                     # .S.S.      .M.S.      .M.M.      .S.M.
             ):
-                found.append((x, y))
-    return len(found)
+                # found.append((x, y))
+                result += 1
+    # return len(found)
+    return result
 
 
 # TEST
 def test():
-    assert neighbors(0, 0, 2, 2) == [(0, 1), (1, 0), (1, 1)]
-    assert neighbors(1, 1, 2, 2) == [(0, 0), (0, 1), (1, 0)]
-    assert neighbors(1, 1, 3, 3) == [(0, 0), (0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1), (2, 2)]
-
     given = parser("""
 MMMSXXMASM
 MSAMXMSMSA
