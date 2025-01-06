@@ -14,15 +14,14 @@ def read_input() -> str:
 
 
 # MAIN
-KEYWORD = 'XMAS'
-
-
 def neighbors(x, y, h, w) -> List[Tuple[int, int]]:
     return [(x + i, y + j) for i in (-1, 0, 1) for j in (-1, 0, 1)
             if (i, j) != (0, 0) and -1 < x + i < h and -1 < y + j < w]
 
 
 def part1(given: List[str]) -> int:
+    KEYWORD = 'XMAS'
+
     def bfs(letters: List[str], paths: List[List[Tuple[int, int]]]):
         if not paths:
             return []
@@ -32,10 +31,10 @@ def part1(given: List[str]) -> int:
             if letters[x][y] == KEYWORD[len(p) - 1]:
                 if len(p) == len(KEYWORD):
                     identified.append(p)
-                    continue
-                for nx, ny in neighbors(x, y, len(letters), len(letters[0])):
-                    if len(p) < 2 or p[-2][0] - x == x - nx and p[-2][1] - y == y - ny:  # word must not break, i.e. have the same direction
-                        identified.extend(bfs(letters, [p + [(nx, ny)]]))
+                else:
+                    for nx, ny in neighbors(x, y, len(letters), len(letters[0])):
+                        if len(p) < 2 or p[-2][0] - x == x - nx and p[-2][1] - y == y - ny:  # word must not break, i.e. have the same direction
+                            identified.extend(bfs(letters, [p + [(nx, ny)]]))
 
         return identified
 
