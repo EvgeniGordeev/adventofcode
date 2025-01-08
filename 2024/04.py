@@ -23,7 +23,7 @@ def part1(letters: List[str]) -> int:
         return [(x + i, y + j) for i in (-1, 0, 1) for j in (-1, 0, 1)
                 if (i, j) != (0, 0) and -1 < x + i < height and -1 < y + j < width]
 
-    def bfs(paths: List[List[Tuple[int, int]]]):
+    def dfs(paths: List[List[Tuple[int, int]]]):
         # identified = []
         counter = 0
         for p in paths:
@@ -36,7 +36,7 @@ def part1(letters: List[str]) -> int:
                     for nx, ny in neighbors(x, y):
                         if len(p) < 2 or p[-2][0] - x == x - nx and p[-2][1] - y == y - ny:  # word must not break, i.e. have the same direction
                             # identified.extend(bfs([p + [(nx, ny)]]))
-                            counter += bfs([p + [(nx, ny)]])
+                            counter += dfs([p + [(nx, ny)]])
 
         # return identified
         return counter
@@ -46,7 +46,7 @@ def part1(letters: List[str]) -> int:
     for x in range(height):
         for y in range(width):
             # found.extend(bfs([[(x, y)]]))
-            result += bfs([[(x, y)]])
+            result += dfs([[(x, y)]])
     # return len(found)
     return result
 
